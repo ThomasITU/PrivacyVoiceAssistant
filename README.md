@@ -2,9 +2,9 @@
 
 ## steps
 
-Create conda environment on a new device
+Create conda environment from file on a new device
 ```cmd
-conda env create <NameEnv> --file speechbrain.yml
+conda env create <NameEnv> --file environment.yml
 ```
 
 Run as admin
@@ -15,5 +15,5 @@ conda run python core.py
 
 Export env
 ```cmd
-conda env export > speechbrain.yml 
+conda env export > environment.yml 
 ```
