@@ -29,7 +29,7 @@ def test():
     score, prediction = verification.verify_batch(templateVoice, sameVoice)
     print(prediction, score)
 
-    print("different voice" files)
+    print("different voice files")
     score, prediction = verification.verify_batch(templateVoice, testVoice)
     print(prediction, score)
      
