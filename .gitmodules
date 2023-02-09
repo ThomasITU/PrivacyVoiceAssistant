@@ -1,0 +1,6 @@
+[submodule "speechbrain"]
+	path = speechbrain
+	url = https://github.com/ThomasITU/speechbrain.git
+[submodule "mycroft-core"]
+	path = mycroft-core
+	url = https://github.com/ThomasITU/mycroft-core.git
