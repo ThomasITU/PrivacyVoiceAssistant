@@ -1,0 +1,2 @@
+#!/usr/bin
+printf '%s\n' n n y y n | bash /workspaces/PrivacyVoiceAssistant/mycroft-core/dev_setup.sh
