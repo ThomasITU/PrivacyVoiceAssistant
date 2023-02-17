@@ -6,18 +6,26 @@ from tempfile import mkdtemp
 
 
 #main function
-def test():
-    tmpdir = mkdtemp("tmpdir")
+class VoiceAuthentication:
 
-    verification = SpeakerRecognition.from_hparams(
-        source="speechbrain/spkrec-ecapa-voxceleb",
-        savedir=tmpdir,
-    )
-
-    templateVoice, fs = torchaudio.load("VoiceSamples/Hello_speechbrain.wav")
-    sameVoice, fs = torchaudio.load("VoiceSamples/What_is_lorem_ipsum.wav")
-    # testVoice, fs = torchaudio.load("VoiceSamples/der_kommer_spyd.flac")
-    testVoice, fs = torchaudio.load("VoiceSamples/test.wav")
+    def __init__(self) :
+        self.tmpdir = mkdtemp("tmpdir")
+        self.speakerRecognition = SpeakerRecognition.from_hparams(
+            source="speechbrain/spkrec-ecapa-voxceleb",
+            savedir=self.tmpdir,
+        )
+        
+    def GenerateScoreArray(self, voiceSample:str, profileSamples:list[str]):
+        sampleVoiceLoaded, _ = torchaudio.load(voiceSample)
+        scoreArray = []
+        for sample in profileSamples:
+            sampleLoaded, _ = torchaudio.load(sample)
+            score, _ = self.speakerRecognition.verify_batch(sampleLoaded, sampleVoiceLoaded)
+            certainty = score[0].item()
+            # print(f"certainty: {certainty}")
+            scoreArray.append(certainty)
+        return scoreArray
+voiceHandler = VoiceAuthentication()
 
 
     
