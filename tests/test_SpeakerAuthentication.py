@@ -17,9 +17,10 @@ def test_FindBestMatch_given_different_voice_profiles_choose_best_match():
     voiceHandler = VoiceAuthentication()
     sample = path + "What_is_lorem_ipsum.wav"
 
-    expected = Profile("Expected", [], [path + "Hello_speechbrain.wav", path + "What_is_lorem_ipsum.wav", path + "set_a_timer.wav"])
     profile1 = Profile("profile1",[], [path + "test.wav", path + "test.wav", path + "test.wav"])
     profile2 = Profile("profile2",[], [path + "der_kommer_spyd.wav", path + "der_kommer_spyd.wav", path + "der_kommer_spyd.wav"])
+    expected = Profile("Expected", [], [path + "Hello_speechbrain.wav", path + "What_is_lorem_ipsum.wav", path + "set_a_timer.wav"])
+
     profileSamples = [expected, profile1, profile2]
 
     actual:Profile = voiceHandler.FindBestMatch(sample, profileSamples)

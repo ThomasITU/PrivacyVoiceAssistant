@@ -4,4 +4,3 @@ class Profile:
         self.name = name
         self.policy = policy
         self.voiceSamples = voiceSamples
-

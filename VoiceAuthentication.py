@@ -9,10 +9,9 @@ import gc
 from PolicyHandler import Profile
 
 
-#main function
 class VoiceAuthentication:
 
-    def __init__(self) :
+    def __init__(self):
         self.tmpdir = mkdtemp("tmpdir")
         self.speakerRecognition = SpeakerRecognition.from_hparams(
             source="speechbrain/spkrec-ecapa-voxceleb",
@@ -25,10 +24,16 @@ class VoiceAuthentication:
         for filePath in profileSamples:
             sampleFile, _ = torchaudio.load(filePath)
             score, _ = self.speakerRecognition.verify_batch(sampleFile, voiceFile)
-            certainty = score[0].item()
-            scoreArray.append(certainty)
+            scoreArray.append(score[0].item())
         return scoreArray
 
+    def FindBestMatch(self, voiceSample:str, profileSamples:list[Profile]):
+        scoreArray = []
+        for profile in profileSamples:
+            scoreArray.append(self.CheckSample(voiceSample, profile.voiceSamples))
+        bestMatch = profileSamples[scoreArray.index(max(scoreArray))]
+        return bestMatch
+    
     def CheckSample(self, voiceSample:str, profileSamples:list[str]):
         scoreArray = self.GenerateScoreArray(voiceSample, profileSamples)
         average = sum(scoreArray)/len(scoreArray)
@@ -37,12 +42,7 @@ class VoiceAuthentication:
     def CheckSampleWithThreshold(self, voiceSample:str, profileSamples:list[str], threshold:float):
         return NotImplemented
 
-    def FindBestMatch(self, voiceSample:str, profileSamples:list[Profile]):
-        scoreArray = []
-        for profile in profileSamples:
-            scoreArray.append(self.GenerateScoreArray(voiceSample, profile.voiceSamples))
-        bestMatch = profileSamples[scoreArray.index(max(scoreArray))]
-        return bestMatch
+
 
 def timeit(func):
     gc.disable()
