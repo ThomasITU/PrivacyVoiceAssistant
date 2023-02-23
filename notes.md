@@ -1,5 +1,12 @@
 # notes for docker setup 
 
+
+## connect to rhasspy container through with a bash shell
+
+```bash
+sudo docker exec -it rhasspy /bin/bash
+```
+
 ## "/dev/snd:/dev/snd": no directory
 ```bash
 sudo docker run -d -p 12101:12101 \
