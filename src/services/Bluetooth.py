@@ -7,6 +7,8 @@
 
 import bluetooth
 
+from bluetooth import  *
+
 def receiveMessages():
   server_sock=bluetooth.BluetoothSocket( bluetooth.RFCOMM )
   
@@ -24,16 +26,24 @@ def receiveMessages():
   server_sock.close()
   
 def sendMessageTo(targetBluetoothMacAddress):
-  port = 1
+  targetPort = [_ for _ in find_service(address=targetBluetoothMacAddress) if 'RFCOMM' in _['protocol']][0]['port']
+  print (targetPort)
   sock=bluetooth.BluetoothSocket( bluetooth.RFCOMM )
-  sock.connect((targetBluetoothMacAddress, port))
+  sock.connect((targetBluetoothMacAddress, targetPort))
   sock.send("hello!!")
   sock.close()
   
-def lookUpNearbyBluetoothDevices():
-  nearby_devices = bluetooth.discover_devices()
-  for bdaddr in nearby_devices:
-    print (str(bluetooth.lookup_name( bdaddr )) + " [" + str(bdaddr) + "]")
-    
+def lookUpNearbyBluetoothDevices(): 
+  devices = discover_devices()
+  for device in devices:
+    print([_ for _ in find_service(address=device) if 'RFCOMM' in _['protocol'] ])
+    # now manually select the desired device or hardcode its name/mac whatever in the script
+
     
 lookUpNearbyBluetoothDevices()
+
+i = 0
+while i < 3:
+  i += 1
+  bt_addr = input("Enter macAddress: \n")
+  sendMessageTo(bt_addr)
