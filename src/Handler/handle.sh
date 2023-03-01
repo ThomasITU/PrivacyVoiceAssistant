@@ -8,3 +8,6 @@
 
 # Output should be JSON
 cat >> /tmp/intentCat.json
+
+curl --output lastCommand.wav http://localhost:12101/api/play-recording
+
