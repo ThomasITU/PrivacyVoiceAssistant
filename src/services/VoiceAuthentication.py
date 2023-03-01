@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 import time
 from functools import wraps
 import gc
-from PolicyHandler import Profile
+from src.Handler.PolicyHandler import Profile
 
 
 class VoiceAuthentication:
