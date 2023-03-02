@@ -1,0 +1,32 @@
+{
+    "dialogue": {
+        "system": "rhasspy"
+    },
+    "handle": {
+        "command": {
+            "program": "/tmp/handler/handle.py"
+        },
+        "system": "command"
+    },
+    "intent": {
+        "system": "fsticuffs"
+    },
+    "microphone": {
+        "system": "pyaudio"
+    },
+    "sounds": {
+        "system": "aplay"
+    },
+    "speech_to_text": {
+        "system": "kaldi"
+    },
+    "text_to_speech": {
+        "flite": {
+            "voice": "slt"
+        },
+        "system": "flite"
+    },
+    "wake": {
+        "system": "porcupine"
+    }
+}

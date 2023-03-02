@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 import time
 from functools import wraps
 import gc
-from src.Handler.PolicyHandler import Profile
+from model.Profile import Profile   
 
 
 class VoiceAuthentication:
@@ -27,9 +27,9 @@ class VoiceAuthentication:
             scoreArray.append(score[0].item())
         return scoreArray
 
-    def FindBestMatch(self, voiceSample:str, profileSamples:list[Profile]):
+    def FindBestMatch(self, voiceSample:str, profiles:list[Profile]):
         scoreArray = []
-        for profile in profileSamples:
+        for profile in profiles:
             scoreArray.append(self.CheckSample(voiceSample, profile.voiceSamples))
         bestMatch = profileSamples[scoreArray.index(max(scoreArray))]
         return bestMatch

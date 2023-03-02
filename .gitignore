@@ -2,9 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
-*.config/profiles/*
+*.config/profiles/kaldi
 !.config/profiles/docker-compose.yml
 !.config/profiles/sentences.ini
+!.config/profiles/profile.json
 
 
 *.ac

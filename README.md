@@ -1,19 +1,40 @@
 # PrivacyVoiceAssistant
 
-## steps
+## how to run on linux
 
-Create conda environment from file on a new device
-```cmd
-conda env create <NameEnv> --file environment.yml
+Ensure docker compose is installed
+
+```sh
+sudo docker compose up
 ```
 
-Run as admin
-```cmd
-conda activate <NameEnv>
-conda run python core.py
-``` 
+Check the localhost [settings](http://localhost:12101/settings)
 
-Export env
-```cmd
-conda env export > environment.yml 
+
+### test speaker config
+
+```sh
+sudo docker exec -it rhasspy /bin/bash
+speaker-test 
+```
+
+### In case of error aplay / ALSA error modify the etc/asound.conf file 
+
+```bash 
+aplay -l
+```
+find the sound card device file <expand later>
+
+
+
+## how to run test 
+
+```sh
+cd test
+pytest 
+```
+
+```sh
+cd test
+pytest <tes_file.py>
 ```

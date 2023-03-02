@@ -74,7 +74,7 @@ services:
     image: rhasspy/rhasspy-tts-cli-hermes
     tty: true
   wake:
-    command: --keyword blueberry_linux.ppn --sensitivity 0.5 --keyword-dir /profiles/en/porcupine
+    command: --keyword porcupine.ppn --sensitivity 0.5 --keyword-dir /profiles/en/porcupine
       --debug --host mqtt --port 12183 --site-id default
     depends_on:
     - mqtt
