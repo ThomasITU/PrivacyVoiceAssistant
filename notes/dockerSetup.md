@@ -106,4 +106,5 @@ bin/rhasspy-remote-http-hermes --tts-url <TTS_URL>
 http://localhost:12101/api/text-to-speech)
 
 
-
+## copy file from container to host
+docker cp <containerId>:/file/path/in/container/file /host/local/path/file
