@@ -1,0 +1,19 @@
+version: "3"
+services:
+  rhasspy:
+    image: rhasspy/rhasspy
+    container_name: rhasspy
+    restart: unless-stopped
+    volumes:
+      - ../.config/profiles:/profiles/en
+      - /etc/localtime:/etc/localtime:ro
+      - /scripts:/tmp/scripts/
+      - ../src/handlers/:/tmp/handler/
+      - type: bind
+        source: ../.config/asound.conf
+        target: /etc/asound.conf
+    ports:
+      - 12101:12101
+    devices:
+      - /dev/snd:/dev/snd
+    command: --user-profiles /profiles --profile en
