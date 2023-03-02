@@ -1,8 +1,8 @@
 import sys, pytest
 path = "/home/main/Desktop/VoiceAssistant/PrivacyVoiceAssistant"
 sys.path.insert(0, path)
-from src.services.VoiceAuthentication import VoiceAuthentication
-from src.Handler.PolicyHandler import Profile
+from services.VoiceAuthentication import VoiceAuthentication
+from model.Profile import Profile
 path += "/VoiceSamples/"
 
 def test_CheckSample_given_same_voice_returns_1():

@@ -1,7 +1,9 @@
 import datetime
+from model.enumerations.Purpose import Purpose
+from model.enumerations.Entity import Entity
 
 class DUR:
-    def __init__(self, purposes:set[str], timestamp:datetime):
+    def __init__(self, purposes:set[Purpose], timestamp:datetime):
         self.purposes = purposes
         self.timestamp = timestamp
     
@@ -11,17 +13,17 @@ class DUR:
     def get_timestamp(self):
         return self.timestamp
     
-    def add_purpose(self, purpose:str):
+    def add_purpose(self, purpose:Purpose):
         self.purposes.add(purpose)
 
-    def remove_purpose(self, purpose:str):
+    def remove_purpose(self, purpose:Purpose):
         self.purposes.remove(purpose)
 
 class Expression:
     NotImplemented
 
 class DCR:
-    def __init__(self, conditions:set[Expression], entity:str, dataUsageRules:DUR):
+    def __init__(self, conditions:set[Expression], entity:Entity, dataUsageRules:DUR):
         self.conditions = conditions
         self.entity = entity
         self.dataUsageRules = dataUsageRules
@@ -44,7 +46,7 @@ class DCR:
     def set_dur(self, dur:DUR):
         self.dataUsageRules = dur
     
-    def set_entity(self, entity:str):
+    def set_entity(self, entity:Entity):
         self.entity = entity
 
 class TR:
@@ -61,7 +63,7 @@ class TR:
         self.transferRules.remove(dataCommunicationRule)
 
 class PrivacyPolicy:
-
+    
     def __init__(self, datatype:str, dataCommunicationRules:DCR, transferRules:TR):
         self.datatype = datatype
         self.dataCommunicationRules = dataCommunicationRules
