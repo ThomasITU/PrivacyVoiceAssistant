@@ -19,6 +19,14 @@ class DUR:
     def remove_purpose(self, purpose:Purpose):
         self.purposes.remove(purpose)
 
+    def __eq__(self, other): 
+        if not isinstance(other, DUR):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.purposes == other.purposes and self.timestamp == other.timestamp
+
+
 class Expression:
     NotImplemented
 
@@ -48,6 +56,14 @@ class DCR:
     
     def set_entity(self, entity:Entity):
         self.entity = entity
+    
+    def __eq__(self, other): 
+        if not isinstance(other, DCR):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.conditions == other.conditions and self.entity == other.entity and self.dataUsageRules == other.dataUsageRules
+
 
 class TR:
     def __init__(self, transferRules:set[DCR]):
@@ -62,9 +78,23 @@ class TR:
     def remove_transferRule(self, dataCommunicationRule:DCR):
         self.transferRules.remove(dataCommunicationRule)
 
+    def __eq__(self, other):
+        if not isinstance(other, TR):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+        return self.transferRules == other.transferRules
+
 class PrivacyPolicy:
     
     def __init__(self, datatype:str, dataCommunicationRules:DCR, transferRules:TR):
         self.datatype = datatype
         self.dataCommunicationRules = dataCommunicationRules
         self.transferRules = {}
+
+    def __eq__(self, other): 
+        if not isinstance(other, PrivacyPolicy):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.datatype == other.datatype and self.dataCommunicationRules == other.dataCommunicationRules and self.transferRules == other.transferRules 
+

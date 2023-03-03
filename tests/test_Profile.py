@@ -17,7 +17,7 @@ def test_saveAsJson_given_profile_returns_json():
     name = "user_load"
     voiceFiles = [path+"voiceFiles/" + name +"/Hello_speechbrain.wav", path+"voiceFiles/" + name + "/What_is_lorem_ipsum.wav"]
     purpose = set([Purpose.WEATHER, Purpose.CALENDER])
-    time = datetime.datetime.now()
+    time = datetime.datetime(1972, 1, 1, 0, 0, 0)
     dur =  DUR(purpose, time)
     сonditions = set()
     entity = Entity.GOOGLE
@@ -39,7 +39,7 @@ def test_loadFromJson_given_json_returns_profile():
     name = "user_load"
     voiceFiles = [path+"voiceFiles/" + name + "/Hello_speechbrain.wav", path+"voiceFiles/" + name +"/What_is_lorem_ipsum.wav"]
     purpose = set([Purpose.WEATHER, Purpose.CALENDER])
-    time = datetime.datetime.year()
+    time = datetime.datetime(1972, 1, 1, 0, 0, 0)
     dur =  DUR(purpose, time)
     сonditions = set()
     entity = Entity.GOOGLE
@@ -55,6 +55,7 @@ def test_loadFromJson_given_json_returns_profile():
     actualProfile = loadFromJson(expectedPath)
     
     # Assert
+    assert profile == actualProfile
     assert profile.name == actualProfile.name
     assert profile.policy == actualProfile.policy
     assert profile.voiceSamples == actualProfile.voiceSamples
