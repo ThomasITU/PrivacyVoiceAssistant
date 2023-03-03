@@ -1,5 +1,4 @@
 import json
-from os import getcwd
 import jsonpickle
 from model.PrivacyPolicy import PrivacyPolicy
 

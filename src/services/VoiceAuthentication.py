@@ -1,3 +1,4 @@
+import os
 from IPython.display import Audio
 from speechbrain.pretrained import SpeakerRecognition
 import torchaudio
@@ -19,10 +20,12 @@ class VoiceAuthentication:
         )
         
     def GenerateScoreArray(self, voiceFile:str, profileSamples:list[str]):
-        voiceFile, _ = torchaudio.load(voiceFile)
+        if (os.path.exists(voiceFile) == False):
+            raise Exception("File does not exist")
+        voiceFile, _ = torchaudio.load(voiceFile, format="wav")
         scoreArray = []
         for filePath in profileSamples:
-            sampleFile, _ = torchaudio.load(filePath)
+            sampleFile, _ = torchaudio.load(filePath, format="wav")
             score, _ = self.speakerRecognition.verify_batch(sampleFile, voiceFile)
             scoreArray.append(score[0].item())
         return scoreArray
@@ -31,7 +34,7 @@ class VoiceAuthentication:
         scoreArray = []
         for profile in profiles:
             scoreArray.append(self.CheckSample(voiceSample, profile.voiceSamples))
-        bestMatch = profileSamples[scoreArray.index(max(scoreArray))]
+        bestMatch = profiles[scoreArray.index(max(scoreArray))]
         return bestMatch
     
     def CheckSample(self, voiceSample:str, profileSamples:list[str]):
