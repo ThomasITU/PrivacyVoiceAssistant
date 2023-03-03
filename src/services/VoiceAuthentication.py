@@ -18,7 +18,22 @@ class VoiceAuthentication:
             source="speechbrain/spkrec-ecapa-voxceleb",
             savedir=self.tmpdir,
         )
-        
+
+    def FindBestMatch(self, voiceSample:str, profiles:list[Profile]):
+        scoreArray = []
+        for profile in profiles:
+            scoreArray.append(self.CheckSample(voiceSample, profile.voiceSamples))
+        bestMatch = profiles[scoreArray.index(max(scoreArray))]
+        return bestMatch
+
+    def CheckSample(self, voiceSample:str, profileSamples:list[str]):
+        scoreArray = self.GenerateScoreArray(voiceSample, profileSamples)
+        average = sum(scoreArray)/len(scoreArray)
+        return average
+
+    def CheckSampleWithThreshold(self, voiceSample:str, profileSamples:list[str], threshold:float):
+        return NotImplemented
+
     def GenerateScoreArray(self, voiceFile:str, profileSamples:list[str]):
         if (os.path.exists(voiceFile) == False):
             raise Exception("File does not exist")
@@ -29,22 +44,6 @@ class VoiceAuthentication:
             score, _ = self.speakerRecognition.verify_batch(sampleFile, voiceFile)
             scoreArray.append(score[0].item())
         return scoreArray
-
-    def FindBestMatch(self, voiceSample:str, profiles:list[Profile]):
-        scoreArray = []
-        for profile in profiles:
-            scoreArray.append(self.CheckSample(voiceSample, profile.voiceSamples))
-        bestMatch = profiles[scoreArray.index(max(scoreArray))]
-        return bestMatch
-    
-    def CheckSample(self, voiceSample:str, profileSamples:list[str]):
-        scoreArray = self.GenerateScoreArray(voiceSample, profileSamples)
-        average = sum(scoreArray)/len(scoreArray)
-        return average
-
-    def CheckSampleWithThreshold(self, voiceSample:str, profileSamples:list[str], threshold:float):
-        return NotImplemented
-
 
 
 def timeit(func):

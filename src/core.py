@@ -14,13 +14,13 @@ def test():
         savedir=tmpdir,
     )
 
-    templateVoice, fs = torchaudio.load("VoiceSamples/Hello_speechbrain.wav")
-    sameVoice, fs = torchaudio.load("VoiceSamples/What_is_lorem_ipsum.wav")
-    # testVoice, fs = torchaudio.load("VoiceSamples/der_kommer_spyd.flac")
-    testVoice, fs = torchaudio.load("VoiceSamples/test.wav")
+    templateVoice, fs = torchaudio.load("../voiceSamples/Hello_speechbrain.wav")
+    sameVoice, fs = torchaudio.load("../voiceSamples/What_is_lorem_ipsum.wav")
+    # testVoice, fs = torchaudio.load("../voiceSamples/der_kommer_spyd.flac")
+    testVoice, fs = torchaudio.load("../voiceSamples/test.wav")
     print(fs)
-    freyjaSpyd, fs = torchaudio.load("VoiceSamples/der_kommer_spyd_freyja.wav")
-    freyjaMaybeSpyd, fs = torchaudio.load("VoiceSamples/der_kommer_måske_spyd_freyja.wav")
+    freyjaSpyd, fs = torchaudio.load("../voiceSamples/der_kommer_spyd_freyja.wav")
+    freyjaMaybeSpyd, fs = torchaudio.load("../voiceSamples/der_kommer_måske_spyd_freyja.wav")
 
     
     print("Same template voice file")
