@@ -1,12 +1,12 @@
 import datetime
 from os import getcwd
 import os
-import sys, pytest
+import sys
 sys.path.append("../src/")
 from model.PrivacyPolicy import DUR, DCR, TR, Expression, PrivacyPolicy
 from model.enumerations.Purpose import Purpose
 from model.enumerations.Entity import Entity
-from model.Profile import Profile, loadFromJson, saveAsJson
+from model.Profile import Profile
 from util.SaveAndLoadJson import SaveAndLoadJson as util
 
 path = getcwd() +  "/resources/"
