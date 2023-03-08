@@ -7,6 +7,7 @@ from model.PrivacyPolicy import DUR, DCR, TR, Expression, PrivacyPolicy
 from model.enumerations.Purpose import Purpose
 from model.enumerations.Entity import Entity
 from model.Profile import Profile, loadFromJson, saveAsJson
+from util.SaveAndLoadJson import SaveAndLoadJson as util
 
 path = getcwd() +  "/resources/"
 
@@ -28,7 +29,7 @@ def test_saveAsJson_given_profile_returns_json():
     expectedPath = path + name + ".json"
 
     # Act +
-    saveAsJson(path + name,profile)
+    util.saveAsJson(path + name + ".json",profile)
     
     # Assert
     assert True == os.path.isfile(expectedPath) 
@@ -49,10 +50,10 @@ def test_loadFromJson_given_json_returns_profile():
     profile = Profile(name, policy, voiceFiles)
     
     expectedPath = path + name + ".json"
-    saveAsJson(path + name,profile)
+    util.saveAsJson(path + name + ".json",profile)
     
     # Act
-    actualProfile = loadFromJson(expectedPath)
+    actualProfile = util.loadFromJson(expectedPath)
     
     # Assert
     assert profile == actualProfile

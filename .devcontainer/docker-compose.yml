@@ -7,7 +7,7 @@ services:
     volumes:
       - ../.config/profiles:/profiles/en
       - /etc/localtime:/etc/localtime:ro
-      - /scripts:/tmp/scripts/
+      # - /scripts:/tmp/scripts/
       - ../src/handlers/:/tmp/handler/
       - type: bind
         source: ../.config/asound.conf

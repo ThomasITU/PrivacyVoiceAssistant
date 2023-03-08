@@ -17,16 +17,5 @@ class Profile:
 
         return self.name == other.name and self.voiceSamples == other.voiceSamples and self.policy == other.policy 
 
-def saveAsJson(path:str, profile:Profile):
-    with open(path+".json", 'w') as outfile:
-        serialized = jsonpickle.encode(profile, outfile)
-        json.dump(serialized, outfile)
-
-def loadFromJson(path:str) -> Profile: 
-    with open(path) as json_file:
-        data = json.load(json_file)
-        decode = jsonpickle.decode(data)
-
-        return decode
 
 
