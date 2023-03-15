@@ -1,6 +1,4 @@
 import json
-import sys
-from os import getcwd
 import jsonpickle
 
 class SaveAndLoadJson():

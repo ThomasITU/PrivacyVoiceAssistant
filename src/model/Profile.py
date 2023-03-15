@@ -1,5 +1,3 @@
-import json
-import jsonpickle
 from model.PrivacyPolicy import PrivacyPolicy
 
 

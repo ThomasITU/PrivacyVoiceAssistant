@@ -7,10 +7,13 @@ for use with rfcomm-server.
 Author: Albert Huang <albert@csail.mit.edu>
 $Id: rfcomm-client.py 424 2006-08-24 03:35:54Z albert $
 """
-
 import sys
+from os import getcwd
+import copy as _
 
+sys.path.append(getcwd() + "/../")
 import bluetooth
+from util.Generate import Generate as _
 
 
 addr = None
