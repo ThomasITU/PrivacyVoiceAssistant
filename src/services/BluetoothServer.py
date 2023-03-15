@@ -1,51 +1,44 @@
 #!/usr/bin/env python3
-"""PyBluez simple example rfcomm-client.py
+"""PyBluez simple example rfcomm-server.py
 
-Simple demonstration of a client application that uses RFCOMM sockets intended
-for use with rfcomm-server.
+Simple demonstration of a server application that uses RFCOMM sockets.
 
 Author: Albert Huang <albert@csail.mit.edu>
-$Id: rfcomm-client.py 424 2006-08-24 03:35:54Z albert $
+$Id: rfcomm-server.py 518 2007-08-10 07:20:07Z albert $
 """
-
-import sys
 
 import bluetooth
 
+server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+server_sock.bind(("", bluetooth.PORT_ANY))
+server_sock.listen(1)
 
-addr = None
+port = server_sock.getsockname()[1]
 
-if len(sys.argv) < 2:
-    print("No device specified. Searching all nearby bluetooth devices for "
-          "the SampleServer service...")
-else:
-    addr = sys.argv[1]
-    print("Searching for SampleServer on {}...".format(addr))
-
-# search for the SampleServer service
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
-service_matches = bluetooth.find_service(uuid=uuid, address=addr)
 
-if len(service_matches) == 0:
-    print("Couldn't find the SampleServer service.")
-    sys.exit(0)
+bluetooth.advertise_service(server_sock, "SampleServer", service_id=uuid,
+                            service_classes=[uuid, bluetooth.SERIAL_PORT_CLASS],
+                            profiles=[bluetooth.SERIAL_PORT_PROFILE],
+                            # protocols=[bluetooth.OBEX_UUID]
+                            )
 
-first_match = service_matches[0]
-port = first_match["port"]
-name = first_match["name"]
-host = first_match["host"]
+print("Waiting for connection on RFCOMM channel", port)
 
-print("Connecting to \"{}\" on {}".format(name, host))
+client_sock, client_info = server_sock.accept()
+print("Accepted connection from", client_info)
 
-# Create the client socket
-sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-sock.connect((host, port))
+try:
+    while True:
+        data = client_sock.recv(1024)
+        if not data:
+            break
+        print("Received", data)
+except OSError:
+    pass
 
-print("Connected. Type something...")
-while True:
-    data = input()
-    if not data:
-        break
-    sock.send(data)
+print("Disconnected.")
 
-sock.close()
+client_sock.close()
+server_sock.close()
+print("All done.")
