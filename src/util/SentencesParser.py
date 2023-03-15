@@ -27,13 +27,19 @@ def parseIniFile(filename):
 
     # removeEntityFromIntent(intents, "LongSentence", Entity.ALEXA)
 def removeEntityFromIntent(intents:dict, intent:str, entity:Entity):
-    intent:dict = intents.get(intent)
-    del intent[entity]
-   
+    entities:dict = intents.get(intent)
+    del entities[entity]
+
+   # removePurposeFromIntent(intents, "LongSentence", Purpose.CALENDAR)
 def removePurposeFromIntent(intents:dict, intent:str, purpose:Purpose):
     entities:dict = intents.get(intent)
-    for entity, purposes in entities:
-        return
+    print(entities)
+    for entity in entities:
+        keys = entity.items()
+        for key in keys:
+            if (entity[key]== purpose):
+                del entity[key]
+        
         
 
 
@@ -42,4 +48,6 @@ if __name__ == '__main__':
     # removeEntityFromIntent(intents, "LongSentence", Entity.ALEXA)
     # print(intents)
     # print("hello")
+    removePurposeFromIntent(intents, "LongSentence", Purpose.CALENDER)
+    print(intents)
     util.saveAsJson(sys.argv[2], intents)    
