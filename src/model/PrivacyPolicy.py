@@ -63,6 +63,9 @@ class DCR:
             return NotImplemented
 
         return self.conditions == other.conditions and self.entity == other.entity and self.dataUsageRules == other.dataUsageRules
+    
+    def __hash__(self) -> int:
+        return super(DCR, self).__hash__()
 
 
 class TR:

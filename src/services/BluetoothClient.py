@@ -25,6 +25,9 @@ else:
     addr = sys.argv[1]
     print("Searching for SampleServer on {}...".format(addr))
 
+profile = _.dummyProfile()
+print(profile)
+
 # search for the SampleServer service
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 service_matches = bluetooth.find_service(uuid=uuid, address=addr)
@@ -49,6 +52,6 @@ while True:
     data = input()
     if not data:
         break
-    sock.send(data)
+    sock.send(profile)
 
 sock.close()
