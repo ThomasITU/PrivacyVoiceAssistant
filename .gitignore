@@ -6,6 +6,11 @@ __pycache__/
 !.config/profiles/docker-compose.yml
 !.config/profiles/sentences.ini
 !.config/profiles/profile.json
+tests/resources/*.json
+tests/resources/*.json
+.config/profiles/sentenceshoohoo.json
+tests/resources/user_load.json
+
 
 
 *.ac
@@ -140,3 +145,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+

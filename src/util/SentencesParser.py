@@ -39,4 +39,7 @@ def removePurposeFromIntent(intents:dict, intent:str, purpose:Purpose):
 
 if __name__ == '__main__':
     intents = parseIniFile(sys.argv[1])
+    # removeEntityFromIntent(intents, "LongSentence", Entity.ALEXA)
+    # print(intents)
+    # print("hello")
     util.saveAsJson(sys.argv[2], intents)    
