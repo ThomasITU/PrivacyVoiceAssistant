@@ -15,7 +15,7 @@ path = getcwd() +  "/resources/"
 def test_saveAsJson_given_profile_returns_json():
     
     # Arrange
-    name = "user_load"
+    name = "userLoad"
     voiceFiles = [path+"voiceFiles/" + name +"/Hello_speechbrain.wav", path+"voiceFiles/" + name + "/What_is_lorem_ipsum.wav"]
     purpose = set([Purpose.WEATHER, Purpose.CALENDER])
     time = datetime.datetime(1972, 1, 1, 0, 0, 0)
@@ -37,7 +37,7 @@ def test_saveAsJson_given_profile_returns_json():
 def test_loadFromJson_given_json_returns_profile():  
 
     # Arrange
-    name = "user_load"
+    name = "userLoad"
     voiceFiles = [path+"voiceFiles/" + name + "/Hello_speechbrain.wav", path+"voiceFiles/" + name +"/What_is_lorem_ipsum.wav"]
     purpose = set([Purpose.WEATHER, Purpose.CALENDER])
     time = datetime.datetime(1972, 1, 1, 0, 0, 0)
