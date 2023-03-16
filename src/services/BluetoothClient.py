@@ -10,13 +10,19 @@ $Id: rfcomm-client.py 424 2006-08-24 03:35:54Z albert $
 import sys
 from os import getcwd
 import copy as _
-
 sys.path.append(getcwd() + "/../")
+
 import bluetooth
 from util.Generate import Generate as _
+from util.SaveAndLoadJson import SaveAndLoadJson
 
 
 addr = None
+
+profile = _.dummyProfile()
+encoded = SaveAndLoadJson.encode(profile)
+print(encoded)
+print(profile)
 
 if len(sys.argv) < 2:
     print("No device specified. Searching all nearby bluetooth devices for "
@@ -25,8 +31,6 @@ else:
     addr = sys.argv[1]
     print("Searching for SampleServer on {}...".format(addr))
 
-profile = _.dummyProfile()
-print(profile)
 
 # search for the SampleServer service
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
@@ -52,6 +56,6 @@ while True:
     data = input()
     if not data:
         break
-    sock.send(profile)
+    sock.send(encoded)
 
 sock.close()

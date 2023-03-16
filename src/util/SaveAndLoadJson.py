@@ -1,5 +1,6 @@
 import json
 import jsonpickle
+import pickle
 
 from model.Profile import Profile
 
@@ -16,11 +17,10 @@ class SaveAndLoadJson():
             decode = jsonpickle.decode(data)
             return decode
         
-    def encode(data:Profile) -> str:
-        serialize = jsonpickle.encode(data)
-        return json.dumps(serialize) 
+    def encode(data:Profile) -> bytes:
+        serialize = pickle.dumps(data)
+        return serialize
 
-    def decode(data:str) -> Profile:
-        profile:Profile = jsonpickle.decode(data)
-
+    def decode(data:bytes) -> Profile:
+        profile:Profile = pickle.loads(data)
         return profile

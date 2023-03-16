@@ -1,5 +1,6 @@
 from os import getcwd
 import os
+import pickle
 import sys
 
 sys.path.append("../src/")
@@ -11,7 +12,7 @@ from util.SaveAndLoadJson import SaveAndLoadJson
 from model.Profile import Profile
 
 
-def test_encode_given_profile_returns_JSON_string():
+def test_encode_given_profile_returns_bytes():
     # Arrange
     profile = _.dummyProfile()
 
@@ -19,9 +20,9 @@ def test_encode_given_profile_returns_JSON_string():
     actual = SaveAndLoadJson.encode(profile)
     
     # Assert
-    assert jsonpickle.dumps(jsonpickle.decode(actual)) == actual
+    assert pickle.dumps(pickle.loads(actual)) == actual
 
-def test_decode_given_JSON_string_returns_profile():
+def test_decode_given_bytes_returns_profile():
     # Arrange
     profile = _.dummyProfile()
     encoded = SaveAndLoadJson.encode(profile)

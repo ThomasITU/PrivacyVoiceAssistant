@@ -7,8 +7,14 @@ Author: Albert Huang <albert@csail.mit.edu>
 $Id: rfcomm-server.py 518 2007-08-10 07:20:07Z albert $
 """
 
+import sys
+from os import getcwd
+import copy as _
+sys.path.append(getcwd() + "/../")
+
 import bluetooth
 from model.Profile import Profile,PrivacyPolicy
+from util.SaveAndLoadJson import SaveAndLoadJson
 
 server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 server_sock.bind(("", bluetooth.PORT_ANY))
@@ -35,7 +41,8 @@ try:
         if not data:
             break
         print("Received", data)
-        profile:Profile = data
+        profile:Profile = SaveAndLoadJson.decode(data)
+        print(profile)
 
 except OSError:
     pass
