@@ -30,7 +30,8 @@ def test_saveAsJson_given_profile_returns_json():
     expectedPath = path + name + ".json"
 
     # Act
-    os.remove(expectedPath)
+    if(os.path.isfile(expectedPath)):
+        os.remove(expectedPath)
     assert False == os.path.isfile(expectedPath)
 
     util.saveAsJson(expectedPath,profile)
