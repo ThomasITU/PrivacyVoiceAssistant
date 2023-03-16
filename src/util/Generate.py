@@ -9,9 +9,9 @@ class Generate():
 
     def dummyProfile() -> Profile: 
         dataUsageRules = DUR(purposes = {Purpose.WEATHER, Purpose.SEARCH},timestamp = datetime.datetime(1972, 1, 1))
-        dataCommunicationRule = DCR({},Entity.GOOGLE,dataUsageRules)
-        pilot = PrivacyPolicy("Audio",{dataCommunicationRule},{})
-        voiceFiles = "unknown"
+        dataCommunicationRule = DCR(set(),Entity.GOOGLE,dataUsageRules)
+        pilot = [PrivacyPolicy("Audio",dataCommunicationRule,set())]
+        voiceFiles = ["unknown/hello.wav", "unknown/what_is_lorem_ipsum.wav"]
 
-        profile = Profile("Test Profile", policy=pilot, voiceSamples=voiceFiles)
+        profile = Profile("Test Profile", pilot, voiceFiles)
         return profile

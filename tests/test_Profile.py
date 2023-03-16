@@ -1,8 +1,9 @@
-import datetime
 from os import getcwd
 import os
 import sys
 sys.path.append("../src/")
+
+import datetime
 from model.PrivacyPolicy import DUR, DCR, TR, Expression, PrivacyPolicy
 from model.enumerations.Purpose import Purpose
 from model.enumerations.Entity import Entity
