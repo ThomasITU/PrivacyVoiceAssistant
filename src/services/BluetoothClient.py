@@ -14,13 +14,13 @@ sys.path.append(getcwd() + "/../")
 
 import bluetooth
 from util.Generate import Generate as _
-from util.SaveAndLoadJson import SaveAndLoadJson
+from util.SaveAndLoad import SaveAndLoad
 
 
 addr = None
 
 profile = _.dummyProfile()
-encoded = SaveAndLoadJson.encode(profile)
+encoded = SaveAndLoad.encode(profile)
 print(encoded)
 print(profile)
 
