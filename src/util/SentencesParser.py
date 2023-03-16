@@ -40,7 +40,6 @@ def removePurposeFromIntent(intents:dict, intent_name:str, purpose_name:Purpose)
     for entity in intent:
         if purpose_name in intent[entity]:
             intent[entity].pop(purpose_name)
-    return intents
 
 
 
