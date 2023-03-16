@@ -4,7 +4,7 @@ import pickle
 
 from model.Profile import Profile
 
-class SaveAndLoadJson():
+class SaveAndLoad():
 
     def saveAsJson(path:str, data):
         with open(path, 'w') as outfile:
