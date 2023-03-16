@@ -85,3 +85,6 @@ def test_removePurposeFromIntent_removes_purpose_from_specified_intent():
 
     assert (Purpose.NAVIGATION in preAssertedDictionary.get(Entity.ALEXA))
     assert (Purpose.NAVIGATION in preAssertedDictionary.get(Entity.GOOGLE))
+
+    assert (Entity.GOOGLE in intentDict.get("LongSentence"))
+    assert (Entity.ALEXA in intentDict.get("GetTime"))
