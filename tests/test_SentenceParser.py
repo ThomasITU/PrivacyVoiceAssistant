@@ -77,9 +77,16 @@ def test_removePurposeFromIntent_removes_purpose_from_specified_intent():
 
     # Act
     #Remove calendar from all entities in LongSentence
+    removePurposeFromIntent(intentDict, "LongSentence", Purpose.CALENDER)
     actualDict = removePurposeFromIntent(intentDict, "LongSentence", Purpose.CALENDER)
-
+    actualDictAssert = actualDict.get("LongSentence")
 
     # Assert
     assert (Purpose.CALENDER not in preAssertedDictionary.get(Entity.ALEXA))
     assert (Purpose.CALENDER not in preAssertedDictionary.get(Entity.GOOGLE))
+
+    assert (Purpose.CALENDER not in actualDictAssert.get(Entity.ALEXA))
+    assert (Purpose.CALENDER not in actualDictAssert.get(Entity.GOOGLE))
+
+    assert (Purpose.NAVIGATION in actualDictAssert.get(Entity.ALEXA))
+    assert (Purpose.NAVIGATION in actualDictAssert.get(Entity.GOOGLE))
