@@ -30,17 +30,18 @@ def removeEntityFromIntent(intents:dict, intent:str, entity:Entity):
     entities:dict = intents.get(intent)
     del entities[entity]
 
-   # removePurposeFromIntent(intents, "LongSentence", Purpose.CALENDAR)
-def removePurposeFromIntent(intents:dict, intent:str, purpose:Purpose):
-    entities:dict = intents.get(intent)
-    print(entities)
-    for entity in entities:
-        keys = entity.items()
-        for key in keys:
-            if (entity[key]== purpose):
-                del entity[key]
-        
-        
+
+
+def removePurposeFromIntent(intents:dict, intent_name:str, purpose_name:Purpose):
+    if intent_name not in intents:
+        raise ValueError(f"Intent '{intent_name}' not found in intents dictionary")
+
+    intent = intents[intent_name]
+    for entity in intent:
+        if purpose_name in intent[entity]:
+            intent[entity].pop(purpose_name)
+    return intents
+
 
 
 if __name__ == '__main__':

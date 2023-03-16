@@ -77,7 +77,7 @@ def test_removePurposeFromIntent_removes_purpose_from_specified_intent():
 
     # Act
     #Remove calendar from all entities in LongSentence
-    removePurposeFromIntent(preAssertedDictionary, "LongSentence", Purpose.CALENDER)
+    actualDict = removePurposeFromIntent(intentDict, "LongSentence", Purpose.CALENDER)
 
 
     # Assert
