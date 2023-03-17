@@ -38,9 +38,7 @@ print("Accepted connection from", client_info)
 try:
     while True:
         data = client_sock.recv(1024)
-        if not data:
-            break
-        print("Received", data)
+        print("\nReceived:\n")
         profile:Profile = SaveAndLoadJson.decode(data)
         print(profile)
 
