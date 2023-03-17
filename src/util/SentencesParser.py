@@ -3,7 +3,7 @@ from os import getcwd
 import copy as _
 
 sys.path.append(getcwd() + "/../")
-from util.SaveAndLoadJson import SaveAndLoadJson as util
+from util.SaveAndLoad import SaveAndLoad as util
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
 
@@ -27,16 +27,24 @@ def parseIniFile(filename):
 
     # removeEntityFromIntent(intents, "LongSentence", Entity.ALEXA)
 def removeEntityFromIntent(intents:dict, intent:str, entity:Entity):
-    intent:dict = intents.get(intent)
-    del intent[entity]
-   
-def removePurposeFromIntent(intents:dict, intent:str, purpose:Purpose):
     entities:dict = intents.get(intent)
-    for entity, purposes in entities:
-        return
-        
+    del entities[entity]
+
+
+
+def removePurposeFromIntent(intents:dict, intent_name:str, purpose_name:Purpose):
+    if intent_name not in intents:
+        raise ValueError(f"Intent '{intent_name}' not found in intents dictionary")
+
+    intent = intents[intent_name]
+    for entity in intent:
+        if purpose_name in intent[entity]:
+            intent[entity].pop(purpose_name)
+
 
 
 if __name__ == '__main__':
     intents = parseIniFile(sys.argv[1])
-    util.saveAsJson(sys.argv[2], intents)    
+    if len(sys.argv) > 2:
+        util.saveAsJson(sys.argv[2], intents)    
+    print(intents)

@@ -26,6 +26,12 @@ class DUR:
 
         return self.purposes == other.purposes and self.timestamp == other.timestamp
 
+    def __str__(self) -> str:
+        purposes = ""
+        for purpose in self.purposes:
+            purposes += purpose.__str__()
+        return f"Purposes: {self.purposes}, Timestamp: {self.timestamp}"
+
 
 class Expression:
     NotImplemented
@@ -66,6 +72,9 @@ class DCR:
     
     def __hash__(self) -> int:
         return super(DCR, self).__hash__()
+    
+    def __str__(self) -> str:
+        return f"Conditions: {self.conditions}, Entity: {self.entity}, DUR's: {self.dataUsageRules}"
 
 
 class TR:
@@ -89,10 +98,10 @@ class TR:
 
 class PrivacyPolicy:
     
-    def __init__(self, datatype:str, dataCommunicationRules:DCR, transferRules:TR):
+    def __init__(self, datatype:str, dataCommunicationRules:DCR, transferRules:set[TR]):
         self.datatype = datatype
         self.dataCommunicationRules = dataCommunicationRules
-        self.transferRules = {}
+        self.transferRules = set()
 
     def __eq__(self, other): 
         if not isinstance(other, PrivacyPolicy):
@@ -101,3 +110,5 @@ class PrivacyPolicy:
 
         return self.datatype == other.datatype and self.dataCommunicationRules == other.dataCommunicationRules and self.transferRules == other.transferRules 
 
+    def __str__(self) -> str:
+        return f"Datatype: {self.datatype}, DCR's: {self.dataCommunicationRules}, TR's: {self.transferRules}"

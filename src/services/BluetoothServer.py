@@ -14,7 +14,7 @@ sys.path.append(getcwd() + "/../")
 
 import bluetooth
 from model.Profile import Profile,PrivacyPolicy
-from util.SaveAndLoadJson import SaveAndLoadJson
+from util.SaveAndLoad import SaveAndLoad
 
 server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 server_sock.bind(("", bluetooth.PORT_ANY))
