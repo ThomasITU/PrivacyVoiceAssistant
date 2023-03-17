@@ -13,28 +13,30 @@ import copy as _
 sys.path.append(getcwd() + "/../")
 
 import bluetooth
+from bluetooth import *
 from util.Generate import Generate as _
 from util.SaveAndLoad import SaveAndLoad
-
-
-addr = None
 
 profile = _.dummyProfile()
 encoded = SaveAndLoad.encode(profile)
 print(encoded)
 print(profile)
 
-if len(sys.argv) < 2:
-    print("No device specified. Searching all nearby bluetooth devices for "
-          "the SampleServer service...")
-else:
-    addr = sys.argv[1]
-    print("Searching for SampleServer on {}...".format(addr))
+def lookUpNearbyBluetoothDevices(): 
+  devices = discover_devices(duration=15, lookup_names=True)
+  for device in devices:
+    print(device)
+  for device in devices:
+    print([_ for _ in find_service(address=device) if 'RFCOMM' in _['protocol'] ])
+    # now manually select the desired device or hardcode its name/mac whatever in the script
 
+
+lookUpNearbyBluetoothDevices()
+addr = input("Enter the address of the device you want to connect to: ")
 
 # search for the SampleServer service
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
-service_matches = bluetooth.find_service(uuid=uuid, address=addr)
+service_matches = bluetooth.find_service(name="SampleServer",uuid=uuid, address=addr)
 
 if len(service_matches) == 0:
     print("Couldn't find the SampleServer service.")
@@ -53,9 +55,9 @@ sock.connect((host, port))
 
 print("Connected. Type something...")
 while True:
+    sock.send(encoded)
     data = input()
     if not data:
         break
-    sock.send(encoded)
 
 sock.close()
