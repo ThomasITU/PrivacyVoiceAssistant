@@ -13,6 +13,7 @@ import copy as _
 sys.path.append(getcwd() + "/../")
 
 import bluetooth
+from bluetooth import *
 from model.Profile import Profile,PrivacyPolicy
 from util.SaveAndLoad import SaveAndLoad
 
@@ -39,7 +40,7 @@ try:
     while True:
         data = client_sock.recv(1024)
         print("\nReceived:\n")
-        profile:Profile = SaveAndLoadJson.decode(data)
+        profile:Profile = SaveAndLoad.decode(data)
         print(profile)
 
 except OSError:
