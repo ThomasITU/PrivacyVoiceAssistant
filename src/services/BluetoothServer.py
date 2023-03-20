@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
-"""PyBluez simple example rfcomm-server.py
-
-Simple demonstration of a server application that uses RFCOMM sockets.
-
-Author: Albert Huang <albert@csail.mit.edu>
-$Id: rfcomm-server.py 518 2007-08-10 07:20:07Z albert $
-"""
-
 import sys
 from os import getcwd
 import copy as _
+from uuid import uuid4
 sys.path.append(getcwd() + "/../")
 
 import bluetooth
@@ -17,37 +10,59 @@ from bluetooth import *
 from model.Profile import Profile,PrivacyPolicy
 from util.SaveAndLoad import SaveAndLoad
 
-server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-server_sock.bind(("", bluetooth.PORT_ANY))
-server_sock.listen(1)
+# Constants
+BUFFER_SIZE = 1024
+DEFAULT_PROFILE_PATH = "/tmp/profiles/"
 
-port = server_sock.getsockname()[1]
+def createServer(uuid="94f39d29-7d6d-437d-973b-fba39e49d4ee", name="VoiceAssistant") -> tuple[int, bluetooth.BluetoothSocket]:
+    server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    server_sock.bind(("", bluetooth.PORT_ANY))
+    server_sock.listen(1)
 
-uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
+    bluetooth.advertise_service(server_sock, name, service_id=uuid,
+                service_classes=[uuid, bluetooth.SERIAL_PORT_CLASS],
+                profiles=[bluetooth.SERIAL_PORT_PROFILE],
+                # protocols=[bluetooth.OBEX_UUID]
+                )
+    port = server_sock.getsockname()[1]
+    print(f"UUID: {uuid} - Listening on port {port}...")
+    return port, server_sock
 
-bluetooth.advertise_service(server_sock, "SampleServer", service_id=uuid,
-                            service_classes=[uuid, bluetooth.SERIAL_PORT_CLASS],
-                            profiles=[bluetooth.SERIAL_PORT_PROFILE],
-                            # protocols=[bluetooth.OBEX_UUID]
-                            )
+def acceptConnections(server_sock:bluetooth.BluetoothSocket, port:int):
+    try:
+        while True:
+            print("Waiting for connection on RFCOMM channel", port)
 
-print("Waiting for connection on RFCOMM channel", port)
+            client_sock, client_info = server_sock.accept()
+            print("Accepted connection from", client_info)
+            data = client_sock.recv(BUFFER_SIZE)
+            if not data:
+                break
+            # print(f"\nReceived: {data}\n")
+            profile:Profile = SaveAndLoad.decode(data)
+            profileReceived(profile)
+            client_sock.close()
+            print("Disconnected.")
+    except OSError:
+        pass
+    server_sock.close()
 
-client_sock, client_info = server_sock.accept()
-print("Accepted connection from", client_info)
+def profileReceived(profile:Profile):
+    if profile is None or isinstance(profile,Profile) == False:
+        return
+    print(f"Received profile: {profile}")
+    path = DEFAULT_PROFILE_PATH + hash(profile) + ".json"
+    SaveAndLoad.saveAsJson(path, profile)
+    if(os.path.isfile(path)):
+        print(f"Saved profile to {path}")
+    else:
+        print(f"Failed to save profile to {path}")
 
-try:
-    while True:
-        data = client_sock.recv(1024)
-        print("\nReceived:\n")
-        profile:Profile = SaveAndLoad.decode(data)
-        print(profile)
+def main():
+    # uuid = uuid4()
+    port, server_sock = createServer()
+    acceptConnections(server_sock, port)
+    print("All done.")
 
-except OSError:
-    pass
-
-print("Disconnected.")
-
-client_sock.close()
-server_sock.close()
-print("All done.")
+if __name__ == '__main__':
+    main()
