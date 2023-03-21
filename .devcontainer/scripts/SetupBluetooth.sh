@@ -6,6 +6,7 @@ apt-get install bluez -y
 pip3.10 install --upgrade pip setuptools==57.5.0
 pip3.10 install git+https://github.com/pybluez/pybluez.git#egg=pybluez
 
+mkdir /var/run/sdp
 
 service dbus start
 service bluetooth start
