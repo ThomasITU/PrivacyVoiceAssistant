@@ -3,11 +3,12 @@ import sys
 from os import getcwd
 import copy as _
 from uuid import uuid4
-sys.path.append(getcwd() + "/../")
-
 import bluetooth
 from bluetooth import *
-from model.Profile import Profile,PrivacyPolicy
+sys.path.append(getcwd() + "/../")
+print(sys.path)
+
+from model.Profile import Profile
 from util.SaveAndLoad import SaveAndLoad
 
 # Constants

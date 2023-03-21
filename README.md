@@ -5,7 +5,7 @@
 Ensure docker compose is installed
 
 ```sh
-sudo docker compose up
+docker compose up
 ```
 
 Check the localhost [settings](http://localhost:12101/settings)
@@ -14,7 +14,7 @@ Check the localhost [settings](http://localhost:12101/settings)
 ### test speaker config
 
 ```sh
-sudo docker exec -it rhasspy /bin/bash
+docker exec -it rhasspy /bin/bash
 speaker-test 
 ```
 
@@ -36,5 +36,5 @@ pytest
 
 ```sh
 cd test
-pytest <tes_file.py>
+pytest <test_file.py>
 ```

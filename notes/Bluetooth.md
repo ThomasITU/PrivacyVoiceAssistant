@@ -1,22 +1,31 @@
 # bluetooth notes
 
 ## ensure bluetooth software is up to date
-sudo apt-get install libbluetooth-dev 
 
+```
+sudo apt-get install libbluetooth-dev 
+```
 
 Common solutions to errors
 
 ## bluetooth module not found 
-pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez
 
+```
+pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez
+```
+
+```
 pip install --upgrade pip setuptools==57.5.0
+```
 
 https://pybluez.readthedocs.io/en/latest/api/index.html
 
 
 ## bluetooth no advertisable device
 
+```
 sudo hciconfig hci0 piscan
+```
 
 ## bluetooth server permission denied
 
