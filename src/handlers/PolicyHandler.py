@@ -1,18 +1,35 @@
 
+from datetime import datetime
+from os import getcwd
 import sys
 
 
+
 sys.path.append("../src/")
-from util.SaveAndLoadJson import SaveAndLoadJson as _
-from profile import Profile
+from util.SentencesParser import parseIniFile
+from model.Profile import Profile
+from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
+from model.enumerations.Entity import Entity
+from model.enumerations.Purpose import Purpose
+
 class PolicyHandler:
     
-    def __init__(self, intentDict:dict, profile:Profile):
-        self.intentDict = _.loadFromJson("/home/freyja/BscProject/PrivacyVoiceAssistant/.config/profiles/sentenceshoohoo.json")
-        self.profile = _.loadFromJson("/home/freyja/BscProject/PrivacyVoiceAssistant/tests/resources/userLoad.json")
+    def __init__(self, intentDict = parseIniFile("/home/freyja/BscProject/PrivacyVoiceAssistant/.config/profiles/sentences.ini")):
+        self.intentDict = intentDict
 
 
-    def comparePolicyWithProfile(self, intent:str):
+    def comparePolicyWithProfile(self, profile:Profile, intent:str) -> tuple[bool, Entity]:
         entities:dict = self.intentDict[intent]
-        self.profile
-        NotImplemented
+        policies:list = profile.get_policy()
+        print(policies)
+        isSuccessfulEntity = (False, None) 
+
+        for p in policies:
+            entity = p.dataCommunicationRules.get_entity()
+            if entity not in entities:
+                break
+            for purposes in p.dataCommunicationRules.dataUsageRules.get_purposes():
+                if purposes not in entities[entity]:
+                    break
+            isSuccessfulEntity = (True, entity)
+        return isSuccessfulEntity

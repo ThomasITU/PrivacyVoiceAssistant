@@ -1,6 +1,7 @@
 from os import getcwd
 import os
 import sys
+
 sys.path.append("../src/")
 
 import datetime
@@ -8,6 +9,7 @@ from model.PrivacyPolicy import DUR, DCR, TR, Expression, PrivacyPolicy
 from model.enumerations.Purpose import Purpose
 from model.enumerations.Entity import Entity
 from model.Profile import Profile
+from util.Generate import Generate as _
 from util.SaveAndLoad import SaveAndLoad as util
 
 path = getcwd() +  "/resources/"
@@ -21,9 +23,9 @@ def test_saveAsJson_given_profile_returns_json():
     purpose = {Purpose.WEATHER, Purpose.CALENDER}
     time = datetime.datetime(1972, 1, 1, 0, 0, 0)
     dur =  DUR(purpose, time)
-    сonditions = set()
+    conditions = set()
     entity = Entity.GOOGLE
-    dcr = DCR(сonditions,entity,dur)
+    dcr = DCR(conditions,entity,dur)
     policy = PrivacyPolicy("Audio",dcr,set())
     profile = Profile(name, policy, voiceFiles)
     
@@ -70,3 +72,17 @@ def test_loadFromJson_given_json_returns_profile_with_all_attributes():
     assert actualProfile.policy[0].dataCommunicationRules.dataUsageRules.timestamp == expectedTimestamp
     assert actualProfile.policy[0].dataCommunicationRules.entity == expectedEntity
     assert actualProfile.policy[0].dataCommunicationRules.conditions == set()
+
+def test_get_policy_returns_list_of_privacy_policies():
+    #Arrange
+    profile = _.dummyProfile()
+    
+    dataUsageRules = DUR(purposes = {Purpose.WEATHER, Purpose.SEARCH},timestamp = datetime.datetime(1972, 1, 1))
+    dataCommunicationRule = DCR(set(),Entity.GOOGLE,dataUsageRules)
+    expectedPolicies = [PrivacyPolicy("Audio",dataCommunicationRule,set())]
+    #Act
+    actualPolicies = profile.get_policy()
+
+    #Assert
+    assert isinstance(actualPolicies, list)
+    assert expectedPolicies == actualPolicies

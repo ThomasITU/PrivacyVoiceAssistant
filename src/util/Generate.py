@@ -15,3 +15,17 @@ class Generate():
 
         profile = Profile("Test Profile", pilot, voiceFiles)
         return profile
+    
+    def dummyIntentDict():
+        purposes = dict()
+        for p in Purpose:
+            purposes[p] = True
+            entities = dict()
+        for e in Entity:
+            entities[e] = _.deepcopy(purposes)
+
+        dummyDict = dict()
+        dummyDict["LongSentence"] = _.deepcopy(entities)
+        dummyDict["GetTime"] = _.deepcopy(entities)
+
+        return dummyDict
