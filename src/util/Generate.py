@@ -1,3 +1,4 @@
+from copy import deepcopy
 import datetime
 from model.Entity import Entity
 from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
@@ -22,10 +23,10 @@ class Generate():
             purposes[p] = True
             entities = dict()
         for e in Entity:
-            entities[e] = _.deepcopy(purposes)
+            entities[e] = deepcopy(purposes)
 
         dummyDict = dict()
-        dummyDict["LongSentence"] = _.deepcopy(entities)
-        dummyDict["GetTime"] = _.deepcopy(entities)
+        dummyDict["LongSentence"] = deepcopy(entities)
+        dummyDict["GetTime"] = deepcopy(entities)
 
         return dummyDict
