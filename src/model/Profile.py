@@ -20,3 +20,6 @@ class Profile:
         for policy in self.policy:
             policies += "\t"+policy.__str__() + "\n"
         return f"Profilname: {self.name}, voice files: {self.voiceSamples}, Policy's:\n{policies}"
+
+    def __hash__(self) -> int:
+        return super(Profile, self).__hash__()
