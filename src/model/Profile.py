@@ -1,12 +1,15 @@
 from model.PrivacyPolicy import PrivacyPolicy
+from model.VoiceSample import VoiceSample
+from pydub import AudioSegment
 
 
 class Profile:
 
-    def __init__(self, name:str, policy:list[PrivacyPolicy], voiceSamples:list[str]):
+    def __init__(self, name:str, policy:list[PrivacyPolicy], voiceSamples:list[str], wavObjects:list[VoiceSample]):
         self.name = name
         self.policy = policy
         self.voiceSamples = voiceSamples
+        self.wavObjects = wavObjects
         
     def __eq__(self, other): 
         if not isinstance(other, Profile):

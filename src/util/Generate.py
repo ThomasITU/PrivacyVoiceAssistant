@@ -13,5 +13,5 @@ class Generate():
         pilot = [PrivacyPolicy("Audio",dataCommunicationRule,set())]
         voiceFiles = ["unknown/hello.wav", "unknown/what_is_lorem_ipsum.wav"]
 
-        profile = Profile("Test Profile", pilot, voiceFiles)
+        profile = Profile("TestProfile", pilot, voiceFiles, [])
         return profile
