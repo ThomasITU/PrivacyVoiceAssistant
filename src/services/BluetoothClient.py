@@ -9,9 +9,10 @@ sys.path.append(getcwd() + "/../")
 from util.Generate import Generate as _
 from util.SaveAndLoad import SaveAndLoad
 from model.Profile import Profile
+from model.VoiceSample import VoiceSample
 
 # Server mac address: 
-# 00:C2:C7:74:FF:85
+# 00:C2:C6:74:FF:85
 
 def printNearbyDevices():
     devices = discover_devices(duration=15)
@@ -22,17 +23,18 @@ def connectToNearbyDevice(name="VoiceAssistant", uuid="94f39d29-7d6d-437d-973b-f
     try:
         if len(targetMacAddress) == 0:
             service_matches = bluetooth.find_service(name=name, uuid=uuid)
+            first_match = service_matches[0]
+            targetMacAddress = first_match["host"]
+            port:int = first_match["port"]
         else:
             service_matches = bluetooth.find_service(address=targetMacAddress)
         if len(service_matches) == 0:
             print(f"Couldn't find the service {name}, {uuid} with address: {targetMacAddress}")
-            return None
+            # return None
         
-        first_match = service_matches[0]
-        port:int = first_match["port"]
         # adjust according to server
-        port = 1 
-        targetMacAddress = first_match["host"]
+        port = 1
+
         return connectToDevice(port, name, targetMacAddress)
     except OSError as e:
         print(e)
@@ -44,8 +46,12 @@ def connectToDevice(port:int, name:str, targetMacAddress) -> bluetooth.Bluetooth
     print("Connected")
     return sock
 
-def sendProfile(sock:BluetoothSocket, profile = _.dummyProfile()):
+def sendProfile(sock:BluetoothSocket, profile:Profile):
     while "y" in input("Send profile? (y/n): ").lower():
+        if profile.name == "dummy".lower(): 
+            profile = _.dummyProfile()
+            wavObj = VoiceSample(f"{getcwd()}/../../voiceSamples/","What_is_lorem_ipsum.wav")
+            profile.wavObjects = [wavObj]
         if isinstance(profile, Profile) == True:
             encoded = SaveAndLoad.encode(profile)
             sock.send(encoded)
@@ -57,7 +63,7 @@ def main():
     
     targetMacAddress = input("Enter the address of the device you want to connect to (leave blank if unsure): ")
     sock = connectToNearbyDevice(targetMacAddress=targetMacAddress)
-    sendProfile(sock)
+    sendProfile(sock,Profile("dummy",[],[],[]))
     print("Done")
 
 
