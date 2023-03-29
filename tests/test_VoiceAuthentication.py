@@ -1,5 +1,6 @@
 from os import getcwd
 import sys, pytest
+
 path = getcwd() + "/../src"
 sys.path.append(path)
 
@@ -12,21 +13,36 @@ from model.enumerations.Purpose import Purpose
 
 test_path = getcwd() + "/../voiceSamples/"
 
+def test_check_sample_given_same_voice_returns_1():
+
+    # Arrange
+    voice_handler = VoiceAuthentication()
+    sample = test_path + "Hello_speechbrain.wav"
+
+    # Act
+    actual = voice_handler._check_sample(sample, [sample])
+
+    # Assert
     assert 1 == pytest.approx(actual)
 
 
-def test_FindBestMatch_given_different_voice_profiles_choose_best_match():
-    voiceHandler = VoiceAuthentication()
-    sample = testPath + "What_is_lorem_ipsum.wav"
+def test_find_best_match_given_different_voice_profiles_choose_best_match():
 
-    profile1 = Profile("profile1",[], [testPath + "test.wav", testPath + "test.wav", testPath + "test.wav"])
-    profile2 = Profile("profile2",[], [testPath + "der_kommer_måske_spyd_freyja.wav", testPath + "der_kommer_måske_spyd_freyja.wav", testPath + "der_kommer_måske_spyd_freyja.wav"])
-    expected = Profile("Expected", [], [testPath + "Hello_speechbrain.wav", testPath + "What_is_lorem_ipsum.wav", testPath + "set_a_timer.wav"])
+    # Arrange
+    voiceHandler = VoiceAuthentication()
+    sample = test_path + "What_is_lorem_ipsum.wav"
+
+    profile1 = Profile("profile1",[], [test_path + "test.wav", test_path + "test.wav", test_path + "test.wav"])
+    profile2 = Profile("profile2",[], [test_path + "der_kommer_måske_spyd_freyja.wav", test_path + "der_kommer_måske_spyd_freyja.wav", test_path + "der_kommer_måske_spyd_freyja.wav"])
+    expected = Profile("Expected", [], [test_path + "Hello_speechbrain.wav", test_path + "What_is_lorem_ipsum.wav", test_path + "set_a_timer.wav"])
 
     profileSamples = [profile1, expected, profile2]
 
+    # Act
     actual:Profile = voiceHandler._find_best_match(sample, profileSamples)
 
+    # Assert
+    assert expected == actual[0]
 
 def test_get_all_profiles_returns_all_profiles():
 

@@ -8,7 +8,7 @@ from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
 
 
-def parseIniFile(filename):
+def parse_ini_file(filename):
     purpose = {}
     for p in Purpose:
         purpose[p] = True
@@ -24,15 +24,11 @@ def parseIniFile(filename):
                 intents[intent] = _.deepcopy(entities)
     return intents
 
-
-    # removeEntityFromIntent(intents, "LongSentence", Entity.ALEXA)
-def removeEntityFromIntent(intents:dict, intent:str, entity:Entity):
+def remove_entity_from_intent(intents:dict, intent:str, entity:Entity):
     entities:dict = intents.get(intent)
     del entities[entity]
 
-
-
-def removePurposeFromIntent(intents:dict, intent_name:str, purpose_name:Purpose):
+def remove_purpose_from_intent(intents:dict, intent_name:str, purpose_name:Purpose):
     if intent_name not in intents:
         raise ValueError(f"Intent '{intent_name}' not found in intents dictionary")
 
@@ -41,10 +37,8 @@ def removePurposeFromIntent(intents:dict, intent_name:str, purpose_name:Purpose)
         if purpose_name in intent[entity]:
             intent[entity].pop(purpose_name)
 
-
-
 if __name__ == '__main__':
-    intents = parseIniFile(sys.argv[1])
+    intents = parse_ini_file(sys.argv[1])
     if len(sys.argv) > 2:
         util.save_as_json(sys.argv[2], intents)    
     print(intents)

@@ -6,7 +6,7 @@ import sys
 
 
 sys.path.append("../src/")
-from util.SentencesParser import parseIniFile
+from util.SentencesParser import parse_ini_file
 from model.Profile import Profile
 from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
 from model.enumerations.Entity import Entity
@@ -14,7 +14,7 @@ from model.enumerations.Purpose import Purpose
 
 class PolicyHandler:
     
-    def __init__(self, intent_dict = parseIniFile(f"{getcwd()}/../.config/profiles/sentences.ini")):
+    def __init__(self, intent_dict = parse_ini_file(f"{getcwd()}/../.config/profiles/sentences.ini")):
         self.intentDict = intent_dict
 
 
