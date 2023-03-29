@@ -29,10 +29,10 @@ def test_voice_assistant_speech_given_hello_prints_dictionary_to_stdout(capsys):
     # Assert
     assert actual == expected_output
 
-def test_save_intent_given_intent_and_file_name_saves_file_as_txt(monkeypatch):
+def test_save_intent_given_intent_and_file_name_saves_file_as_txt():
 
     # Arrange
-    oldPath = Constant.INTENT_PATH
+    old_path = Constant.INTENT_PATH
     path = f"{getcwd()}/resources/intents/"
     Constant.INTENT_PATH = path
     file_name = "101testXYZ"
@@ -42,7 +42,7 @@ def test_save_intent_given_intent_and_file_name_saves_file_as_txt(monkeypatch):
     # Act
     save_intent_to_file(expected_intent, f"{path}{file_name}.wav")
     is_file = os.path.isfile(expected_file_name)
-    Constant.INTENT_PATH = oldPath
+    Constant.INTENT_PATH = old_path
     if(is_file):
         actual_intent = SaveAndLoad.load_from_json(expected_file_name)
         os.remove(expected_file_name)
@@ -92,8 +92,8 @@ def test_save_voice_file_saves_file_and_returns_file_name():
     assert actual_file_info.EXTENSION == 'wav' 
     assert actual_file_info.MIME == 'audio/x-wav'
 
-# helper method
 
+# helper methods
 def _print_to_stdin(monkeypatch):
     intent = _open_json(f"{getcwd()}/resources/IntentTest.json")
     monkeypatch.setattr('sys.stdin', io.StringIO(json.dumps(intent)))
