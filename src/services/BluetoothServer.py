@@ -34,10 +34,9 @@ def createServer(uuid="94f39d29-7d6d-437d-973b-fba39e49d4ee", name="VoiceAssista
     print(f"UUID: {uuid} - Listening on port {port}...")
     return port, server_sock
 
-def getBluetoothAddress(mode:str) -> str:
-    if mode == "hci":
+def getBluetoothAddress(device_id:str) -> str:
+    if(device_id.startswith("hci")):
         cmd = "hciconfig"
-        device_id = "hci1" 
         stream = os.popen(cmd)
         output = stream.read()
         bt_mac = output.split("{}:".format(device_id))[1].split("BD Address: ")[1].split(" ")[0].strip()
