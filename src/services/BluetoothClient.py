@@ -10,6 +10,8 @@ from util.Generate import Generate as _
 from util.SaveAndLoad import SaveAndLoad
 from model.Profile import Profile
 
+# Server mac address: 
+# 00:C2:C7:74:FF:85
 
 def printNearbyDevices():
     devices = discover_devices(duration=15)
@@ -19,18 +21,20 @@ def printNearbyDevices():
 def connectToNearbyDevice(name="VoiceAssistant", uuid="94f39d29-7d6d-437d-973b-fba39e49d4ee", targetMacAddress=None) -> bluetooth.BluetoothSocket:
     try:
         if len(targetMacAddress) == 0:
-            service_matches = bluetooth.find_service(name, uuid)
+            service_matches = bluetooth.find_service(name=name, uuid=uuid)
         else:
-            service_matches = bluetooth.find_service(name, uuid, targetMacAddress)
+            service_matches = bluetooth.find_service(address=targetMacAddress)
         if len(service_matches) == 0:
             print(f"Couldn't find the service {name}, {uuid} with address: {targetMacAddress}")
             return None
         
         first_match = service_matches[0]
-        port = first_match["port"]
+        port:int = first_match["port"]
+        # adjust according to server
+        port = 1 
         targetMacAddress = first_match["host"]
         return connectToDevice(port, name, targetMacAddress)
-    except any as e:
+    except OSError as e:
         print(e)
 
 def connectToDevice(port:int, name:str, targetMacAddress) -> bluetooth.BluetoothSocket:
@@ -42,7 +46,7 @@ def connectToDevice(port:int, name:str, targetMacAddress) -> bluetooth.Bluetooth
 
 def sendProfile(sock:BluetoothSocket, profile = _.dummyProfile()):
     while "y" in input("Send profile? (y/n): ").lower():
-        if isinstance(profile, Profile) == False:
+        if isinstance(profile, Profile) == True:
             encoded = SaveAndLoad.encode(profile)
             sock.send(encoded)
     sock.close()
