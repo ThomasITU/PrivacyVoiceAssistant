@@ -15,6 +15,9 @@ class SaveAndLoad():
         with open(path) as json_file:
             data = json.load(json_file)
             decode = jsonpickle.decode(data)
+            if(isinstance(decode, Profile)):
+                decode.voiceSamples = sorted(decode.voiceSamples)
+                decode.policy = sorted(decode.policy)
             return decode
         
     def encode(data:Profile) -> bytes:
@@ -23,4 +26,6 @@ class SaveAndLoad():
 
     def decode(data:bytes) -> Profile:
         profile:Profile = pickle.loads(data)
+        profile.voiceSamples = sorted(profile.voiceSamples)
+        profile.policy = sorted(profile.policy)
         return profile
