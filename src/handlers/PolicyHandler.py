@@ -14,8 +14,8 @@ from model.enumerations.Purpose import Purpose
 
 class PolicyHandler:
     
-    def __init__(self, intentDict = parseIniFile(f"{getcwd()}/../.config/profiles/sentences.ini")):
-        self.intentDict = intentDict
+    def __init__(self, intent_dict = parseIniFile(f"{getcwd()}/../.config/profiles/sentences.ini")):
+        self.intentDict = intent_dict
 
 
     def comparePolicyWithProfile(self, profile:Profile, intent:str) -> tuple[bool, Entity]:
