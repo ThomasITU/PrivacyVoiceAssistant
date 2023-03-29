@@ -45,7 +45,7 @@ def main():
         file_name = save_voice_file()
         intent = get_intent(file_name)
         save_intent_to_file(intent, file_name)
-        profile = VoiceAuthentication.FindBestMatch(file_name,)
+        profile = VoiceAuthentication.find_best_match_above_threshold(file_name,Constant.PROFILE_AUTHENTICATION_THRESHOLD)
         is_allowed = PolicyHandler.comparePolicyWithProfile(profile, intent)
         if (is_allowed[0]):
             response = IntentHandler.handle_intent(intent)

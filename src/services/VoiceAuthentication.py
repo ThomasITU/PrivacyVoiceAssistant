@@ -13,37 +13,39 @@ from model.Profile import Profile
 class VoiceAuthentication:
 
     def __init__(self):
-        self.tmpdir = mkdtemp("tmpdir")
-        self.speakerRecognition = SpeakerRecognition.from_hparams(
+        self.tmp_dir = mkdtemp("tmpdir")
+        self.speaker_recognition = SpeakerRecognition.from_hparams(
             source="speechbrain/spkrec-ecapa-voxceleb",
-            savedir=self.tmpdir,
+            savedir=self.tmp_dir,
         )
-
-    def FindBestMatch(self, voiceSample:str, profiles:list[Profile]):
-        scoreArray = []
+    def find_best_match_above_threshold(self, voiceSample:str, profileSamples:list[str], threshold:float):
+        best_match = self._find_best_match(voiceSample, profileSamples)
+        if (best_match[1] >= threshold):
+            return best_match
+        return None
+    
+    def _find_best_match(self, voice_sample:str, profiles:list[Profile]) -> tuple[Profile, float]:
+        score_array = []
         for profile in profiles:
-            scoreArray.append(self.CheckSample(voiceSample, profile.voiceSamples))
-        bestMatch = profiles[scoreArray.index(max(scoreArray))]
-        return bestMatch
+            score_array.append(self._check_sample(voice_sample, profile.voiceSamples))
+        best_match = profiles[score_array.index(max(score_array))]
+        return (best_match, max(score_array))
 
-    def CheckSample(self, voiceSample:str, profileSamples:list[str]):
-        scoreArray = self.GenerateScoreArray(voiceSample, profileSamples)
-        average = sum(scoreArray)/len(scoreArray)
+    def _check_sample(self, voice_sample:str, profile_samples:list[str]):
+        score_array = self.generate_score_array(voice_sample, profile_samples)
+        average = sum(score_array)/len(score_array)
         return average
 
-    def CheckSampleWithThreshold(self, voiceSample:str, profileSamples:list[str], threshold:float):
-        return NotImplemented
-
-    def GenerateScoreArray(self, voiceFile:str, profileSamples:list[str]):
-        if (os.path.exists(voiceFile) == False):
+    def generate_score_array(self, voice_file:str, profile_samples:list[str]):
+        if (os.path.exists(voice_file) == False):
             raise Exception("File does not exist")
-        voiceFile, _ = torchaudio.load(voiceFile, format="wav")
-        scoreArray = []
-        for filePath in profileSamples:
-            sampleFile, _ = torchaudio.load(filePath, format="wav")
-            score, _ = self.speakerRecognition.verify_batch(sampleFile, voiceFile)
-            scoreArray.append(score[0].item())
-        return scoreArray
+        voice_file, _ = torchaudio.load(voice_file, format="wav")
+        score_array = []
+        for file_path in profile_samples:
+            sample_file, _ = torchaudio.load(file_path, format="wav")
+            score, _ = self.speaker_recognition.verify_batch(sample_file, voice_file)
+            score_array.append(score[0].item())
+        return score_array
 
 
 def timeit(func):
@@ -62,7 +64,7 @@ def timeit(func):
 
 @timeit
 def test(voiceSample:str, voiceHandler:VoiceAuthentication, profileSamples:list[str]):
-    scoreArray = voiceHandler.GenerateScoreArray(voiceSample, profileSamples)
+    scoreArray = voiceHandler.generate_score_array(voiceSample, profileSamples)
     print(f"score array:{scoreArray}")
     print(f"average: {sum(scoreArray)/len(scoreArray)}\n")
 
