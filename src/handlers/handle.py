@@ -32,21 +32,9 @@ def get_intent(file_name:str) -> str:
     intent = o["intent"]["name"]
     return intent
 
-def speech(text):
-    o["speech"] = {"text": text}
+    print(json.dumps(speech))
 
 
-
-if intent == "GetTime":
-    now = datetime.datetime.now()
-    speech("It's %s %d %s." % (now.strftime('%H'), now.minute, now.strftime('%p')))
-
-elif intent == "Hello":
-    replies = ['Hi!', 'Hello!', 'Hey there!', 'Greetings.']
-    speech(random.choice(replies))
-
-# convert dict to json and print to stdout
-print(json.dumps(o))
 
 def main():
     fileName = save_voice_file()
