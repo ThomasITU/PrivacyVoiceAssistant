@@ -14,7 +14,7 @@ from model.enumerations.Purpose import Purpose
 
 class PolicyHandler:
     
-    def __init__(self, intentDict = parseIniFile("/home/freyja/BscProject/PrivacyVoiceAssistant/.config/profiles/sentences.ini")):
+    def __init__(self, intentDict = parseIniFile(f"{getcwd()}/../.config/profiles/sentences.ini")):
         self.intentDict = intentDict
 
 
