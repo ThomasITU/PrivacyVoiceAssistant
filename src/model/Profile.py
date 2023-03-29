@@ -7,6 +7,9 @@ class Profile:
         self.name = name
         self.policy = policy
         self.voiceSamples = voiceSamples
+
+    def get_policy(self):
+        return self.policy
         
     def __eq__(self, other): 
         if not isinstance(other, Profile):
@@ -15,6 +18,9 @@ class Profile:
 
         return self.name == other.name and self.voiceSamples == other.voiceSamples and self.policy == other.policy 
 
+    def __hash__(self) -> int:
+        return super(Profile, self).__hash__()
+    
     def __str__(self) -> str:
         policies = ""
         for policy in self.policy:

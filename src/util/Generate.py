@@ -1,3 +1,4 @@
+from copy import deepcopy
 import datetime
 from model.Entity import Entity
 from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
@@ -15,3 +16,17 @@ class Generate():
 
         profile = Profile("Test Profile", pilot, voiceFiles)
         return profile
+    
+    def dummyIntentDict():
+        purposes = dict()
+        for p in Purpose:
+            purposes[p] = True
+            entities = dict()
+        for e in Entity:
+            entities[e] = deepcopy(purposes)
+
+        dummyDict = dict()
+        dummyDict["LongSentence"] = deepcopy(entities)
+        dummyDict["GetTime"] = deepcopy(entities)
+
+        return dummyDict
