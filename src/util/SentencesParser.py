@@ -46,5 +46,5 @@ def removePurposeFromIntent(intents:dict, intent_name:str, purpose_name:Purpose)
 if __name__ == '__main__':
     intents = parseIniFile(sys.argv[1])
     if len(sys.argv) > 2:
-        util.saveAsJson(sys.argv[2], intents)    
+        util.save_as_json(sys.argv[2], intents)    
     print(intents)

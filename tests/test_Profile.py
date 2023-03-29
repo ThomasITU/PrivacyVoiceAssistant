@@ -36,7 +36,7 @@ def test_saveAsJson_given_profile_returns_json():
         os.remove(expectedPath)
     assert False == os.path.isfile(expectedPath)
 
-    util.saveAsJson(expectedPath,profile)
+    util.save_as_json(expectedPath,profile)
     
     # Assert
     assert True == os.path.isfile(expectedPath) 
@@ -56,10 +56,10 @@ def test_loadFromJson_given_json_returns_profile_with_all_attributes():
     expectedProfile = Profile(expectedName, expectedPolicies, expectedVoiceFiles)
     
     expectedPath = path + expectedName + ".json"
-    util.saveAsJson(path + expectedName + ".json",expectedProfile)
+    util.save_as_json(path + expectedName + ".json",expectedProfile)
     
     # Act
-    actualProfile = util.loadFromJson(expectedPath)
+    actualProfile = util.load_from_json(expectedPath)
     
     # Assert
     assert actualProfile == expectedProfile
