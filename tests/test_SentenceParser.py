@@ -1,51 +1,46 @@
-import datetime
 from os import getcwd
-import os
 import sys
 sys.path.append("../src/")
-from util.SaveAndLoadJson import SaveAndLoadJson as util
+path = getcwd() +  "/resources/sentenceTest.ini"
+
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
 from util.SentencesParser import parseIniFile, removeEntityFromIntent, removePurposeFromIntent
+import copy as _
 
-path = getcwd() +  "/resources/"
+def generateDummyDictionary() -> dict:
+    purposes = dict()
+    for p in Purpose:
+        purposes[p] = True
+    entitities = dict()
+    for e in Entity:
+        entitities[e] = _.deepcopy(purposes)
+
+    dummyDict = dict()
+    dummyDict["LongSentence"] = _.deepcopy(entitities)
+    dummyDict["GetTime"] = _.deepcopy(entitities)
+
+    return dummyDict
 
 def test_parseIniFile_given_ini_file_returns__matching_dictionary():
 
     # Arrange
-    purposeDict = {}
-    entityDict = {}
-    for p in Purpose:
-        purposeDict[p] = True
-    for e in Entity:
-        entityDict[e] = purposeDict
-    expectedIntentsDict = {
-        "LongSentence": entityDict,
-        "GetTime": entityDict
-    }
+    expected = generateDummyDictionary()
 
     # Act
-    actualIntentsDict = parseIniFile(path + "/sentenceTest.ini")
+    actual = parseIniFile(path)
 
-    hasPurpose = actualIntentsDict.get("LongSentence").get(Entity.ALEXA).get(Purpose.CALENDER)
+    hasPurpose = actual.get("LongSentence").get(Entity.ALEXA).get(Purpose.CALENDER)
    
     # Assert
     assert True == hasPurpose
-    assert expectedIntentsDict == actualIntentsDict
+    assert expected == actual
+    assert ("random" not in actual) == True 
 
 def test_removeEntityFromIntent_removes_entity():
 
     # Arrange
-    purposeDict = {}
-    entityDict = {}
-    for p in Purpose:
-        purposeDict[p] = True
-    for e in Entity:
-        entityDict[e] = purposeDict
-    intentDict = {
-        "LongSentence": entityDict,
-        "GetTime": entityDict
-    }
+    intentDict = generateDummyDictionary()
 
     #Pre-Assert
     assert (Entity.ALEXA in intentDict.get("LongSentence"))
@@ -57,17 +52,9 @@ def test_removeEntityFromIntent_removes_entity():
 
 
 def test_removePurposeFromIntent_removes_purpose_from_specified_intent():
+    
     # Arrange
-    purposeDict = {}
-    entityDict = {}
-    for p in Purpose:
-        purposeDict[p] = True
-    for e in Entity:
-        entityDict[e] = purposeDict
-    intentDict = {
-        "LongSentence": entityDict,
-        "GetTime": entityDict
-    }
+    intentDict = generateDummyDictionary()
 
     preAssertedDictionary = intentDict.get("LongSentence")
 

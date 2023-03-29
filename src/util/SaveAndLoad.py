@@ -1,9 +1,10 @@
 import json
-import sys
-from os import getcwd
 import jsonpickle
+import pickle
 
-class SaveAndLoadJson():
+from model.Profile import Profile
+
+class SaveAndLoad():
 
     def saveAsJson(path:str, data):
         with open(path, 'w') as outfile:
@@ -16,3 +17,10 @@ class SaveAndLoadJson():
             decode = jsonpickle.decode(data)
             return decode
         
+    def encode(data:Profile) -> bytes:
+        serialize = pickle.dumps(data)
+        return serialize
+
+    def decode(data:bytes) -> Profile:
+        profile:Profile = pickle.loads(data)
+        return profile

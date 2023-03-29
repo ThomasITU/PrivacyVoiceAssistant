@@ -3,7 +3,7 @@ from os import getcwd
 import copy as _
 
 sys.path.append(getcwd() + "/../")
-from util.SaveAndLoadJson import SaveAndLoadJson as util
+from util.SaveAndLoad import SaveAndLoad as util
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
 
@@ -45,9 +45,6 @@ def removePurposeFromIntent(intents:dict, intent_name:str, purpose_name:Purpose)
 
 if __name__ == '__main__':
     intents = parseIniFile(sys.argv[1])
-    # removeEntityFromIntent(intents, "LongSentence", Entity.ALEXA)
-    # print(intents)
-    # print("hello")
-    removePurposeFromIntent(intents, "LongSentence", Purpose.CALENDER)
+    if len(sys.argv) > 2:
+        util.saveAsJson(sys.argv[2], intents)    
     print(intents)
-    util.saveAsJson(sys.argv[2], intents)    

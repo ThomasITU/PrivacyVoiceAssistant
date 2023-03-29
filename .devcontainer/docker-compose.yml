@@ -7,8 +7,11 @@ services:
     volumes:
       - ../.config/profiles:/profiles/en
       - /etc/localtime:/etc/localtime:ro
-      # - /scripts:/tmp/scripts/
+      - ../src/:/PivacyVoiceAssistant/src/
+      - ../lib/:/privacyVoiceAssistant/lib/
       - ../src/handlers/:/tmp/handler/
+      - ./scripts/:/PivacyVoiceAssistant/scripts/
+      - ../resources/:/PivacyVoiceAssistant/resources/
       - type: bind
         source: ../.config/asound.conf
         target: /etc/asound.conf
@@ -16,4 +19,8 @@ services:
       - 12101:12101
     devices:
       - /dev/snd:/dev/snd
+    network_mode: host
+    privileged: true
+    cap_add:
+      - NET_ADMIN
     command: --user-profiles /profiles --profile en

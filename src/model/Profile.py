@@ -1,5 +1,3 @@
-import json
-import jsonpickle
 from model.PrivacyPolicy import PrivacyPolicy
 
 
@@ -17,5 +15,11 @@ class Profile:
 
         return self.name == other.name and self.voiceSamples == other.voiceSamples and self.policy == other.policy 
 
+    def __str__(self) -> str:
+        policies = ""
+        for policy in self.policy:
+            policies += "\t"+policy.__str__() + "\n"
+        return f"Profilname: {self.name}, voice files: {self.voiceSamples}, Policy's:\n{policies}"
 
-
+    def __hash__(self) -> int:
+        return super(Profile, self).__hash__()
