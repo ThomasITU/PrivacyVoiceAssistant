@@ -7,7 +7,12 @@ from tempfile import mkdtemp
 import time
 from functools import wraps
 import gc
-from model.Profile import Profile   
+
+import sys
+sys.path.append(os.getcwd() + "/../")
+from model.Constant import Constant
+from model.Profile import Profile
+from util.SaveAndLoad import SaveAndLoad   
 
 
 class VoiceAuthentication:
@@ -18,8 +23,9 @@ class VoiceAuthentication:
             source="speechbrain/spkrec-ecapa-voxceleb",
             savedir=self.tmp_dir,
         )
-    def find_best_match_above_threshold(self, voiceSample:str, profileSamples:list[str], threshold:float):
-        best_match = self._find_best_match(voiceSample, profileSamples)
+    def find_best_match_above_threshold(self, voiceSample:str, threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD):
+        profiles = self.get_all_profiles()
+        best_match = self._find_best_match(voiceSample, profiles)
         if (best_match[1] >= threshold):
             return best_match
         return None
@@ -46,6 +52,14 @@ class VoiceAuthentication:
             score, _ = self.speaker_recognition.verify_batch(sample_file, voice_file)
             score_array.append(score[0].item())
         return score_array
+
+    def get_all_profiles(self, path = Constant.DEFAULT_PROFILE_PATH) -> list[Profile]:
+        profiles:list[Profile] = []
+        for file in os.listdir(path):
+            if file.endswith(".json"):
+                profile:Profile = SaveAndLoad.load_from_json(path+file)
+                profiles.append(profile)  
+        return profiles
 
 
 def timeit(func):
