@@ -45,12 +45,18 @@ def voice_assistant_speech(text:str):
 
 
 def main():
-    fileName = save_voice_file()
-    intent = save_intent_to_file()
-    (profile, response) = VoiceAuthentication.FindBestMatch(fileName,)
-    isAllowed = PolicyHandler.comparePolicyWithProfile()
-    if (isAllowed[0]):
-        iisAllowed[1]
+    try:
+        file_name = save_voice_file()
+        intent = get_intent(file_name)
+        profile = VoiceAuthentication.FindBestMatch(file_name,)
+        is_allowed = PolicyHandler.comparePolicyWithProfile(profile, intent)
+        if (is_allowed[0]):
+            response = IntentHandler.handle_intent(intent)
+            voice_assistant_speech(response)
+        else:
+            voice_assistant_speech(is_allowed[1])
+    except OSError as e:
+        voice_assistant_speech(e)
 
 if __name__ == '__main__':
     main()
