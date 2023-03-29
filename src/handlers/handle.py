@@ -4,10 +4,9 @@ from asyncio import log
 import subprocess
 import sys
 import json
-import random
-import datetime
 import uuid
 from os import getcwd
+
 
 sys.path.append(getcwd() + "/../")
 from handlers.IntentHandler import IntentHandler
@@ -15,6 +14,8 @@ from handlers.PolicyHandler import PolicyHandler
 from services.VoiceAuthentication import VoiceAuthentication
 from model.Constant import Constant
 from util.SaveAndLoad import SaveAndLoad
+from util.SentencesParser import parse_ini_file
+
 
 
 def save_intent_to_file(intent:str, file_name:str):
@@ -42,12 +43,17 @@ def voice_assistant_speech(text:str):
 
 
 def main():
+
     try:
-        file_name:str = save_voice_file()
+        log("Start handling intent")
         intent:str = get_intent()
+        file_name:str = save_voice_file()
         save_intent_to_file(intent, file_name)
+        log("Start voice authentication")
         profile = VoiceAuthentication.find_best_match_above_threshold(voiceSample=file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
-        is_allowed = PolicyHandler.comparePolicyWithProfile(profile, intent)
+        log("Start policy comparison")
+        policy_handler = PolicyHandler(intent_dict=parse_ini_file(Constant.INI_FILE_PATH))
+        is_allowed = policy_handler.comparePolicyWithProfile(profile, intent)
         if (is_allowed[0]):
             response = IntentHandler.handle_intent(intent)
             voice_assistant_speech(response)

@@ -1,4 +1,9 @@
 import os
+import sys
+sys.path.append(os.getcwd() + "/../")
+from model.Constant import Constant
+sys.path.append(Constant.SPEECHBRAIN_PATH)
+
 from IPython.display import Audio
 from speechbrain.pretrained import SpeakerRecognition
 import torchaudio
@@ -8,9 +13,7 @@ import time
 from functools import wraps
 import gc
 
-import sys
-sys.path.append(os.getcwd() + "/../")
-from model.Constant import Constant
+
 from model.Profile import Profile
 from util.SaveAndLoad import SaveAndLoad   
 

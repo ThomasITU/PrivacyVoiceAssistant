@@ -11,10 +11,12 @@ from model.Profile import Profile
 from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
+from model.Constant import Constant
+
 
 class PolicyHandler:
     
-    def __init__(self, intent_dict = parse_ini_file(f"{getcwd()}/../.config/profiles/sentences.ini")):
+    def __init__(self, intent_dict = parse_ini_file(Constant.INI_FILE_PATH)):
         self.intentDict = intent_dict
 
 
