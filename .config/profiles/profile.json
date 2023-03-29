@@ -4,7 +4,8 @@
     },
     "handle": {
         "command": {
-            "program": "/tmp/handler/handle.py"
+            "arguments": "",
+            "program": "/privacyVoiceAssistant/src/handlers/handle.sh"
         },
         "system": "command"
     },
@@ -27,6 +28,9 @@
         "system": "flite"
     },
     "wake": {
+        "porcupine": {
+            "keyword_path": "blueberry_linux.ppn"
+        },
         "system": "porcupine"
     }
 }
