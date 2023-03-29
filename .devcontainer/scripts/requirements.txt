@@ -1,6 +1,7 @@
 better_apidoc==0.3.2
-datasets==2.10.1
+datasets==2.11.0
 fairseq==0.12.2
+filetype==1.2.0
 h5py==3.8.0
 huggingface_hub==0.13.2
 HyperPyYAML==1.1.0
@@ -39,5 +40,5 @@ torch==2.0.0
 torchaudio==2.0.1
 torchvision==0.15.1
 tqdm==4.65.0
-transformers==4.27.2
-webdataset==0.2.43
+transformers==4.27.4
+webdataset==0.2.48
