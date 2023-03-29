@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from asyncio import log
 import subprocess
 import sys
 import json
@@ -42,10 +43,10 @@ def voice_assistant_speech(text:str):
 
 def main():
     try:
-        file_name = save_voice_file()
-        intent = get_intent(file_name)
+        file_name:str = save_voice_file()
+        intent:str = get_intent()
         save_intent_to_file(intent, file_name)
-        profile = VoiceAuthentication.find_best_match_above_threshold(file_name,Constant.PROFILE_AUTHENTICATION_THRESHOLD)
+        profile = VoiceAuthentication.find_best_match_above_threshold(voiceSample=file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
         is_allowed = PolicyHandler.comparePolicyWithProfile(profile, intent)
         if (is_allowed[0]):
             response = IntentHandler.handle_intent(intent)
@@ -53,6 +54,7 @@ def main():
         else:
             voice_assistant_speech(is_allowed[1])
     except OSError as e:
+        log.error(e)
         voice_assistant_speech(e)
 
 if __name__ == '__main__':
