@@ -12,7 +12,7 @@ apt install vim -y
 if [ -d "$path" ]; then
     echo "$path exists."
 else 
-  
+  echo "$path does not exist."
 fi
 
 echo "installing python"

@@ -9,12 +9,14 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ../src/:/PivacyVoiceAssistant/src/
       - ../lib/:/privacyVoiceAssistant/lib/
-      - ../src/handlers/:/tmp/handler/
       - ./scripts/:/PivacyVoiceAssistant/scripts/
       - ../resources/:/PivacyVoiceAssistant/resources/
       - type: bind
         source: ../.config/asound.conf
         target: /etc/asound.conf
+      - type: bind
+        source: ../requirements.txt
+        target: /PivacyVoiceAssistant/requirements.txt
     ports:
       - 12101:12101
     devices:

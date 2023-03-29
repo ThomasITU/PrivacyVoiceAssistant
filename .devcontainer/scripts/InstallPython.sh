@@ -17,8 +17,8 @@ else
     cd Python-3.10.8 
     ./configure --enable-optimizations 
     make altinstall 
-    cd ../../privacyVoiceAssistant/src/
+    cd /../privacyVoiceAssistant/
 fi
 
-
-pip3.10 install -r --file requirements.txt
+pip3.10 install speechbrain
+# pip3.10 install -r requirements.txt
