@@ -3,20 +3,15 @@ import sys
 from os import getcwd
 import copy as _
 from uuid import uuid4
-import socket
 import bluetooth
 from bluetooth import *
+from model.Constant import Constant
 
 sys.path.append(getcwd() + "/../")
 print(sys.path)
 
 from model.Profile import Profile
 from util.SaveAndLoad import SaveAndLoad
-
-
-# Constants
-BUFFER_SIZE = 1024
-DEFAULT_PROFILE_PATH = "/PivacyVoiceAssistant/resources/profiles/"
 
 
 def createServer(uuid="94f39d29-7d6d-437d-973b-fba39e49d4ee", name="VoiceAssistant") -> tuple[int, bluetooth.BluetoothSocket]:
@@ -56,7 +51,7 @@ def acceptConnections(server_sock:bluetooth.BluetoothSocket, port:int):
 
             client_sock, client_info = server_sock.accept()
             print("Accepted connection from", client_info)
-            data = client_sock.recv(BUFFER_SIZE)
+            data = client_sock.recv(Constant.BLUETOOTH_BUFFER_SIZE)
             if not data:
                 break
             profile:Profile = SaveAndLoad.decode(data)
@@ -70,12 +65,12 @@ def acceptConnections(server_sock:bluetooth.BluetoothSocket, port:int):
         print("Bluetooth connection closed unexpectly.")
     server_sock.close()
 
-def profileReceived(profile:Profile, path = DEFAULT_PROFILE_PATH):
+def profileReceived(profile:Profile, path = Constant.DEFAULT_PROFILE_PATH):
     if profile is None or isinstance(profile,Profile) == False:
         return
     print(f"Received profile: {profile}")
     path += str(hash(profile)) + ".json"
-    SaveAndLoad.saveAsJson(path, profile)
+    SaveAndLoad.save_as_json(path, profile)
     if(os.path.isfile(path)):
         print(f"Saved profile to {path}")
     else:
