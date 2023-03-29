@@ -31,11 +31,15 @@ def save_voice_file() -> str:
 
 def get_intent(file_name:str) -> str:
     # get json from stdin and load into python dict
-    o = json.loads(sys.stdin.read())
-
-    intent = o["intent"]["name"]
+    global dictionary
+    dictionary = json.loads(sys.stdin.read())
+    intent = dictionary["intent"]["name"]
+    save_intent_to_file(intent, file_name)
     return intent
 
+def voice_assistant_speech(text:str):
+    speech = dict()
+    speech["speech"] = {"text": text}
     print(json.dumps(speech))
 
 
