@@ -9,6 +9,7 @@ __pycache__/
 tests/resources/*.json
 tests/resources/*.json
 .config/profiles/sentenceshoohoo.json
+resources/profiles/*
 
 
 
