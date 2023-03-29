@@ -13,13 +13,12 @@ from handlers.IntentHandler import IntentHandler
 from handlers.PolicyHandler import PolicyHandler
 from services.VoiceAuthentication import VoiceAuthentication
 from model.Constant import Constant
+from util.SaveAndLoad import SaveAndLoad
 
 
 def save_intent_to_file(intent:str, file_name:str):
-    file_name = f"{file_name.removesuffix('.wav')}.txt"
-    f = open(Constant.INTENT_PATH+file_name, "w")
-    f.write(intent + "\n")
-    f.close()
+    file_name = f"{file_name.removesuffix('.wav')}.json"
+    SaveAndLoad.save_as_json(file_name, intent)
 
 def save_voice_file() -> str:
     file_name:str = uuid.uuid4()+".wav"
@@ -28,13 +27,11 @@ def save_voice_file() -> str:
                            universal_newlines=True)
     return file_name
 
-def get_intent(file_name = '') -> str:
+def get_intent() -> str:
     # get json from stdin and load into python dict
     global dictionary
     dictionary = json.loads(sys.stdin.read())
     intent = dictionary["intent"]["name"]
-    if(file_name != ''):
-        save_intent_to_file(intent, file_name)
     return intent
 
 def voice_assistant_speech(text:str):
@@ -43,11 +40,11 @@ def voice_assistant_speech(text:str):
     print(json.dumps(speech))
 
 
-
 def main():
     try:
         file_name = save_voice_file()
         intent = get_intent(file_name)
+        save_intent_to_file(intent, file_name)
         profile = VoiceAuthentication.FindBestMatch(file_name,)
         is_allowed = PolicyHandler.comparePolicyWithProfile(profile, intent)
         if (is_allowed[0]):
