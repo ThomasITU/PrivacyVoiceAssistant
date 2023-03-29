@@ -6,24 +6,28 @@ import json
 import random
 import datetime
 import uuid
+from os import getcwd
+sys.path.append(getcwd() + "/../")
+from handlers.IntentHandler import IntentHandler
 from handlers.PolicyHandler import PolicyHandler
-
 from services.VoiceAuthentication import VoiceAuthentication
 
 ENDPOINT = "http://localhost:12101/api/play-recording"
-PATH = "/tmp/voiceFiles/"
-global o
-def save_intent_to_file(intent:str, fileName:str):
-    f = open("/tmp/lastIntent.txt", "w")
+VOICEPATH = "/tmp/voiceFiles/"
+INTENTPATH ="/tmp/intents/"
+
+def save_intent_to_file(intent:str, file_name:str):
+    file_name = f"{file_name.removesuffix('.wav')}.txt"
+    f = open(INTENTPATH+file_name, "w")
     f.write(intent + "\n")
     f.close()
 
 def save_voice_file() -> str:
-    fileName = PATH+uuid.uuid4()+".wav"
-    process = subprocess.Popen(['curl', '--output', fileName, ENDPOINT], 
+    file_name:str = uuid.uuid4()+".wav"
+    process = subprocess.Popen(['curl', '--output', VOICEPATH+file_name, ENDPOINT], 
                            stdout=subprocess.PIPE,
                            universal_newlines=True)
-    return fileName
+    return file_name
 
 def get_intent(file_name:str) -> str:
     # get json from stdin and load into python dict
