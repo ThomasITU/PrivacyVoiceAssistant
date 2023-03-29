@@ -3,7 +3,8 @@ import json
 import os
 import sys
 from os import getcwd
-
+import time
+import filetype
 
 sys.path.append(getcwd() + "/../src/")
 from handlers.handle import get_intent, voice_assistant_speech, save_intent_to_file, save_voice_file
@@ -64,16 +65,32 @@ def test_get_intent_reads_stdin_and_returns_intent(monkeypatch):
     # Assert
     assert actual == expected_intent
 
-# only asserts true if voice assistant is running 
-def test_save_voice_file_returns_file_name():
-    NotImplemented
+# only asserts true if voice assistant is running
+def test_save_voice_file_saves_file_and_returns_file_name():
 
     # Arrange
-
+    old_path = Constant.VOICE_PATH 
+    Constant.VOICE_PATH = f"{getcwd()}/resources/voiceFiles/"
+    path = Constant.VOICE_PATH
 
     # Act
+    actual = save_voice_file(path)
+    actual_path = path + actual
+    time.sleep(2.5)
+    is_file = os.path.isfile(actual_path)
+    if(is_file):
+        actual_file_info = filetype.guess(actual_path)
+        time.sleep(1)
+        os.remove(actual_path)
+    Constant.VOICE_PATH = old_path
 
     # Assert
+    assert isinstance(actual,str)
+    assert len(actual) > 5
+    assert True == is_file
+    assert False == os.path.isfile(actual_path)
+    assert actual_file_info.EXTENSION == 'wav' 
+    assert actual_file_info.MIME == 'audio/x-wav'
 
 # helper method
 

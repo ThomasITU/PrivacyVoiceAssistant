@@ -20,9 +20,9 @@ def save_intent_to_file(intent:str, file_name:str):
     file_name = f"{file_name.removesuffix('.wav')}.json"
     SaveAndLoad.save_as_json(file_name, intent)
 
-def save_voice_file() -> str:
-    file_name:str = uuid.uuid4()+".wav"
-    process = subprocess.Popen(['curl', '--output', Constant.VOICE_PATH+file_name, Constant.LAST_VOICE_COMMAND_ENDPOINT], 
+def save_voice_file(path = Constant.VOICE_PATH) -> str:
+    file_name = str(uuid.uuid4())+".wav"
+    process = subprocess.Popen(['curl', '--output', path+file_name, Constant.LAST_VOICE_COMMAND_ENDPOINT], 
                            stdout=subprocess.PIPE,
                            universal_newlines=True)
     return file_name
