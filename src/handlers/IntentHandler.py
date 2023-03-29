@@ -5,6 +5,10 @@ class IntentHandler:
     def handle_intent():
         NotImplemented
     
+    # for a simple solution add a switch case
+
+    # Dictionary or list able to register with callback functions
+    
 
 # if intent == "GetTime":
 #     now = datetime.datetime.now()
