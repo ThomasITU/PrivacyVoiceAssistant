@@ -9,3 +9,4 @@ class Constant:
     PROFILE_AUTHENTICATION_THRESHOLD: Final[float] = 0.75
     INI_FILE_PATH: Final[str] = "/profiles/en/sentences.ini"
     SPEECHBRAIN_PATH: Final[str] = "/privacyVoiceAssistant/lib/speechbrain"
+    LOGGING_PATH: Final[str] = "/tmp/debug.log"
