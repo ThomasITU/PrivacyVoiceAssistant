@@ -20,9 +20,10 @@ else
     cd /../privacyVoiceAssistant/
 fi
 
-pip3.10 install --upgrade pip
-pip3.10 install speechbrain
-pip3.10 install jsonpickle
-pip3.10 install ipython
 
-pip3.10 install -r requirements.txt
+python3.10 -m pip install speechbrain
+python3.10 -m pip install jsonpickle
+python3.10 -m pip install ipython
+pip install --upgrade pip
+
+python3.10 -m pip install -r requirements.txt
