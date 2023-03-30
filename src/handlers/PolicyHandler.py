@@ -16,14 +16,13 @@ from model.Constant import Constant
 
 class PolicyHandler:
     
-    def __init__(self, intent_dict = parse_ini_file(Constant.INI_FILE_PATH)):
+    def __init__(self, intent_dict:dict[str, dict[Entity, list[Purpose]]]):
         self.intentDict = intent_dict
 
 
     def comparePolicyWithProfile(self, profile:Profile, intent:str) -> tuple[bool, Entity]:
         entities:dict = self.intentDict[intent]
         policies:list = profile.get_policy()
-        print(policies)
         isSuccessfulEntity = (False, None) 
 
         for p in policies:
