@@ -7,14 +7,4 @@
 # Profile directory: ${RHASSPY_PROFILE_DIR}
 
 # Output should be JSON
-cat >> /tmp/intentCat.json
-
-path="/tmp/voiceFiles/"
-curl --output ${path}lastCommand.wav http://localhost:12101/api/play-recording
-
-
-echo "{
-	"speech": {
-		"text": "Saved file at ${path}lastCommand.wav"
- 	 }
-}"
+python3.10 handle.py 

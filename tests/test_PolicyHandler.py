@@ -31,7 +31,7 @@ def test_comparePolicyWithProfile_returns_proper_tuple():
     dictIntentDifferent = {"DummyIntent": dictEntitiesDifferent}
 
     #Arrange PolicyHandler dictionaries
-    policyHandlerSame = PolicyHandler(dictIntent)
+    policyHandlerSame = PolicyHandler(intent_dict=dictIntent)
     policyHandlerDifferent = PolicyHandler(dictIntentDifferent)
 
     #Act

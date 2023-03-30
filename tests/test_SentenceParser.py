@@ -5,7 +5,7 @@ path = getcwd() +  "/resources/sentenceTest.ini"
 
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
-from util.SentencesParser import parseIniFile, removeEntityFromIntent, removePurposeFromIntent
+from util.SentencesParser import parse_ini_file, remove_entity_from_intent, remove_purpose_from_intent
 import copy as _
 
 def generateDummyDictionary() -> dict:
@@ -28,7 +28,7 @@ def test_parseIniFile_given_ini_file_returns__matching_dictionary():
     expected = generateDummyDictionary()
 
     # Act
-    actual = parseIniFile(path)
+    actual = parse_ini_file(path)
 
     hasPurpose = actual.get("LongSentence").get(Entity.ALEXA).get(Purpose.CALENDER)
    
@@ -46,7 +46,7 @@ def test_removeEntityFromIntent_removes_entity():
     assert (Entity.ALEXA in intentDict.get("LongSentence"))
 
     # Act
-    removeEntityFromIntent(intentDict, "LongSentence", Entity.ALEXA)
+    remove_entity_from_intent(intentDict, "LongSentence", Entity.ALEXA)
     # Assert
     assert (Entity.ALEXA not in intentDict.get("LongSentence"))
 
@@ -64,7 +64,7 @@ def test_removePurposeFromIntent_removes_purpose_from_specified_intent():
 
     # Act
     #Remove calendar from all entities in LongSentence
-    removePurposeFromIntent(intentDict, "LongSentence", Purpose.CALENDER)
+    remove_purpose_from_intent(intentDict, "LongSentence", Purpose.CALENDER)
 
     # Assert
     assert (Purpose.CALENDER not in preAssertedDictionary.get(Entity.ALEXA))

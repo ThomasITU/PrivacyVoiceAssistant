@@ -7,14 +7,16 @@ services:
     volumes:
       - ../.config/profiles:/profiles/en
       - /etc/localtime:/etc/localtime:ro
-      - ../src/:/PivacyVoiceAssistant/src/
+      - ../src/:/privacyVoiceAssistant/src/
       - ../lib/:/privacyVoiceAssistant/lib/
-      - ../src/handlers/:/tmp/handler/
-      - ./scripts/:/PivacyVoiceAssistant/scripts/
-      - ../resources/:/PivacyVoiceAssistant/resources/
+      - ./scripts/:/privacyVoiceAssistant/scripts/
+      - ../resources/:/privacyVoiceAssistant/resources/
       - type: bind
         source: ../.config/asound.conf
         target: /etc/asound.conf
+      - type: bind
+        source: ../requirements.txt
+        target: /privacyVoiceAssistant/requirements.txt
     ports:
       - 12101:12101
     devices:
