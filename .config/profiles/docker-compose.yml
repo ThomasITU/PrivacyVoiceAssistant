@@ -21,8 +21,8 @@ services:
     - /profiles:/profiles
   microphone:
     command: --sample-rate 16000 --sample-width 2 --channels 1 --debug --host mqtt
-      --port 12183 --site-id default --udp-audio-host 127.0.0.1 --frames-per-buffer
-      1024
+      --port 12183 --site-id default --device-index 11 --udp-audio-host 127.0.0.1
+      --frames-per-buffer 1024
     depends_on:
     - mqtt
     devices:
