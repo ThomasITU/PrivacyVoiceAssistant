@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.10
 
 import logging
 import subprocess
@@ -6,16 +6,25 @@ import sys
 import json
 import uuid
 from os import getcwd
+logging.basicConfig(format='%(asctime)s - %(message)s', 
+                        level=logging.INFO,
+                        handlers=[logging.FileHandler("tmp/debug.log"),logging.StreamHandler()])
+logging.info("importing modules")
 
-
-sys.path.append(getcwd() + "/../")
-from handlers.IntentHandler import IntentHandler
-from handlers.PolicyHandler import PolicyHandler
-from services.VoiceAuthentication import VoiceAuthentication
-from model.Constant import Constant
-from util.SaveAndLoad import SaveAndLoad
-from util.SentencesParser import parse_ini_file
-
+sys.path.append("/privacyVoiceAssistant/src")
+try:
+    from handlers.IntentHandler import IntentHandler
+    from handlers.PolicyHandler import PolicyHandler
+    from services.VoiceAuthentication import VoiceAuthentication
+    from model.Constant import Constant
+    from util.SaveAndLoad import SaveAndLoad
+    from util.SentencesParser import parse_ini_file
+except Exception as e:
+    process = subprocess.Popen(['python', '-V'],
+                            stdout=subprocess.PIPE,
+                            universal_newlines=True)
+    logging.info(process.stdout.read())
+    logging.info(e)
 
 
 def save_intent_to_file(intent:str, file_name:str):
@@ -41,9 +50,11 @@ def voice_assistant_speech(text:str):
     speech["speech"] = {"text": text}
     print(json.dumps(speech))
 
-
+logging.info("before main")
 def main():
-    logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s - %(message)s', 
+                        level=logging.INFO,
+                        handlers=[logging.FileHandler("/tmp/debug.log"),logging.StreamHandler()])
     
     try:
         logging.info("Start handling intent")
@@ -63,6 +74,4 @@ def main():
     except OSError as e:
         logging.error(e)
         voice_assistant_speech(e)
-
-if __name__ == '__main__':
-    main()
+main()
