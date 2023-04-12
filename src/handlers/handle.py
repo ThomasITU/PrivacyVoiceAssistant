@@ -1,18 +1,15 @@
 #!/usr/bin/env python3.10
 
-import logging
 import subprocess
-import sys
 import json
 import uuid
-from os import getcwd
-logging.basicConfig(format='%(asctime)s - %(message)s', 
-                        level=logging.INFO,
-                        handlers=[logging.FileHandler("tmp/debug.log"),logging.StreamHandler()])
-logging.info("importing modules")
 
+import logging
+import sys
 sys.path.append("/privacyVoiceAssistant/src")
 try:
+    from util.Generate import Generate
+    Generate.logingConfig(logging)
     from handlers.IntentHandler import IntentHandler
     from handlers.PolicyHandler import PolicyHandler
     from services.VoiceAuthentication import VoiceAuthentication
@@ -52,9 +49,6 @@ def voice_assistant_speech(text:str):
 
 logging.info("before main")
 def main():
-    logging.basicConfig(format='%(asctime)s - %(message)s', 
-                        level=logging.INFO,
-                        handlers=[logging.FileHandler("/tmp/debug.log"),logging.StreamHandler()])
     
     try:
         logging.info("Start handling intent")
@@ -62,7 +56,8 @@ def main():
         file_name:str = save_voice_file()
         save_intent_to_file(intent, file_name)
         logging.info("Start voice authentication")
-        profile = VoiceAuthentication.find_best_match_above_threshold(voiceSample=file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
+        voiceHandler = VoiceAuthentication()
+        profile = voiceHandler.find_best_match_above_threshold(voiceSample=file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
         logging.info("Start policy comparison")
         policy_handler = PolicyHandler(intent_dict=parse_ini_file(Constant.INI_FILE_PATH))
         is_allowed = policy_handler.comparePolicyWithProfile(profile, intent)

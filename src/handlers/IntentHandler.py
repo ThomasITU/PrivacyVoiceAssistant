@@ -12,6 +12,8 @@ class IntentHandler:
                 return _long_sentence()
             case "GetTime":
                 return _get_time()
+            case "GetTemperature":
+                return _get_temperature()
             case _:
                 return f"Currently we cannot provide {intent} as it is not implemented yet"
 
@@ -27,3 +29,5 @@ def _hello() -> str:
     replies = ['Hi!', 'Hello!', 'Hey there!', 'Greetings.']
     return random.choice(replies)
                
+def _get_temperature() -> str:
+    return "It is 20 degrees Celsius"
