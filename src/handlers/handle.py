@@ -57,7 +57,7 @@ def main():
         save_intent_to_file(intent, file_name)
         logging.info("Start voice authentication")
         voiceHandler = VoiceAuthentication()
-        profile = voiceHandler.find_best_match_above_threshold(voiceSample=file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
+        profile = voiceHandler.find_best_match_above_threshold(voiceSample=Constant.VOICE_PATH+file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
         logging.info("Start policy comparison")
         policy_handler = PolicyHandler(intent_dict=parse_ini_file(Constant.INI_FILE_PATH))
         is_allowed = policy_handler.comparePolicyWithProfile(profile, intent)

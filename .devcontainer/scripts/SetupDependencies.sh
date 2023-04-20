@@ -8,6 +8,7 @@ mkdir $path/amd64
 mkdir $path/amd64/archives
 mkdir $path/amd64/archives/partial
 apt install vim -y
+mkdir /tmp/voiceFiles
 
 if [ -d "$path" ]; then
     echo "$path exists."
