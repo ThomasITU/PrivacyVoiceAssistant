@@ -26,7 +26,8 @@ except Exception as e:
 
 def save_intent_to_file(intent:str, file_name:str):
     file_name = f"{file_name.removesuffix('.wav')}.json"
-    SaveAndLoad.save_as_json(file_name, intent)
+    file_name = file_name.removeprefix(Constant.VOICE_PATH)
+    SaveAndLoad.save_as_json(Constant.INTENT_PATH+file_name, intent)
 
 def save_voice_file(path = Constant.VOICE_PATH) -> str:
     file_name = str(uuid.uuid4())+".wav"
@@ -43,9 +44,11 @@ def get_intent() -> str:
     return intent
 
 def voice_assistant_speech(text:str):
+    logging.info("Start voice assistant speech")
     speech = dict()
     speech["speech"] = {"text": text}
     print(json.dumps(speech))
+    logging.info("End voice assistant speech")
 
 logging.info("before main")
 def main():
@@ -58,13 +61,19 @@ def main():
         logging.info("Start voice authentication")
         voiceHandler = VoiceAuthentication()
         profile = voiceHandler.find_best_match_above_threshold(voiceSample=Constant.VOICE_PATH+file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
+        logging.info(profile)
         logging.info("Start policy comparison")
         policy_handler = PolicyHandler(intent_dict=parse_ini_file(Constant.INI_FILE_PATH))
-        is_allowed = policy_handler.comparePolicyWithProfile(profile, intent)
+        is_allowed = policy_handler.comparePolicyWithProfile(profile[0], intent)
         if (is_allowed[0]):
-            response = IntentHandler.handle_intent(intent)
+            logging.info("Intent is allowed")
+            intentHandler = IntentHandler()
+            response = intentHandler.handle_intent(intent)
+            logging.info(response)
             voice_assistant_speech(response)
+            logging.info("Intent handled")
         else:
+            logging.info("Intent is not allowed")
             voice_assistant_speech(is_allowed[1])
     except OSError as e:
         logging.error(e)
