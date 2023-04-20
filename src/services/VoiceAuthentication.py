@@ -22,7 +22,7 @@ from util.Generate import Generate
 class VoiceAuthentication:
 
     def __init__(self):
-        self.tmp_dir = mkdtemp("tmpdir")
+        self.tmp_dir = mkdtemp("tmpdir", dir=Constant.TEMP_PATH)
         self.speaker_recognition = SpeakerRecognition.from_hparams(
             source="speechbrain/spkrec-ecapa-voxceleb",
             savedir=self.tmp_dir,
