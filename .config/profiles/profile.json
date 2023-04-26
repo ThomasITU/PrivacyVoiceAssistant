@@ -5,7 +5,7 @@
     "handle": {
         "command": {
             "arguments": "",
-            "program": "/privacyVoiceAssistant/src/handlers/handle.sh"
+            "program": "/privacyVoiceAssistant/src/handlers/handle.py"
         },
         "system": "command"
     },
@@ -13,6 +13,9 @@
         "system": "fsticuffs"
     },
     "microphone": {
+        "pyaudio": {
+            "device": "11"
+        },
         "system": "pyaudio"
     },
     "sounds": {
