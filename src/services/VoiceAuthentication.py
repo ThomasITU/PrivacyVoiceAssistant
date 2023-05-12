@@ -9,10 +9,6 @@ from speechbrain.pretrained import SpeakerRecognition
 import torchaudio
 from tempfile import mkdtemp
 
-import time
-from functools import wraps
-import gc
-
 
 from model.Profile import Profile
 from util.SaveAndLoad import SaveAndLoad   
@@ -63,34 +59,3 @@ class VoiceAuthentication:
                 profile:Profile = SaveAndLoad.load_from_json(path+file)
                 profiles.append(profile)  
         return profiles
-
-
-def timeit(func):
-    gc.disable()
-    @wraps(func)
-    def timeit_wrapper(*args, **kwargs):
-        start_counter_ns = time.perf_counter_ns()
-        result = func(*args, **kwargs)
-        end_counter_ns = time.perf_counter_ns()
-        total_time = (end_counter_ns - start_counter_ns)/10**9
-        print(f'Function {func.__name__}{args} {kwargs} Took {total_time:.4f} seconds')
-        return result
-    gc.enable()
-    return timeit_wrapper
-
-
-@timeit
-def test(voiceSample:str, voiceHandler:VoiceAuthentication, profileSamples:list[str]):
-    scoreArray = voiceHandler.generate_score_array(voiceSample, profileSamples)
-    print(f"score array:{scoreArray}")
-    print(f"average: {sum(scoreArray)/len(scoreArray)}\n")
-
-
-# input("Press enter to start")
-# if __name__ == '__main__':
-#     voiceHandler = VoiceAuthentication()
-#     profileSamples = ["VoiceSamples/Hello_speechbrain.wav", "VoiceSamples/Hello_speechbrain.wav","VoiceSamples/What_is_lorem_ipsum.wav" ]
-#     test("VoiceSamples/What_is_lorem_ipsum.wav", voiceHandler, profileSamples)
-
-#     profileSamples2 = ["VoiceSamples/test.wav"]          
-#     test("VoiceSamples/What_is_lorem_ipsum.wav", voiceHandler, profileSamples2)

@@ -1,6 +1,5 @@
 import datetime
 import random
-from model.Intent import Intent
 
 class IntentHandler:
 
