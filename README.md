@@ -1,15 +1,43 @@
 # PrivacyVoiceAssistant
 
-## how to run on linux
+## pre-requesites
+
+- Linux machine
+- Docker engine installed
+- Microphone, Speaker and Bluetooth device
+- Python 3.10 
+
+## How to run on linux
 
 Ensure docker compose is installed
 
+### Only intial setup (Reinstall scripts)  
+
+From root
+
 ```sh
-docker compose up
+cd .devcontainer
+docker compose up 
 ```
 
-Check the localhost [settings](http://localhost:12101/settings)
+### After initial setup
+```sh
+docker compose start
+```
 
+Open the docker container with an interactive terminal and install dependicies using the script
+
+```sh
+docker exec -it rhasspy /bin/bash
+source /privacyVoiceAssistant/scripts/SetupDependencies.sh
+```
+
+Check the localhost [settings](http://localhost:12101/settings#microphone)
+- Microphone is picked up 
+    - ![pyaudio](/notes/images/Pyaudio_Microphone.png)
+
+- Speaker is  
+    - ![speaker](/notes/images/speaker_audio.png)
 
 ### test speaker config
 
@@ -20,10 +48,15 @@ speaker-test
 
 ### In case of error aplay / ALSA error modify the etc/asound.conf file 
 
-```bash 
+```sh 
 aplay -l
 ```
 find the sound card device file <expand later>
+
+### In case of microphone not being picked up 
+
+```sh
+```
 
 
 
