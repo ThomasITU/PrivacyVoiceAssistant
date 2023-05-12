@@ -21,4 +21,4 @@ else
 fi
 
 pip3.10 install speechbrain
-# pip3.10 install -r requirements.txt
+pip3.10 install -r requirements.txt

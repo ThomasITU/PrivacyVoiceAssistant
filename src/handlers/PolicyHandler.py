@@ -16,8 +16,13 @@ from model.Constant import Constant
 
 class PolicyHandler:
     
-    def __init__(self, intent_dict = parse_ini_file(Constant.INI_FILE_PATH)):
-        self.intentDict = intent_dict
+    def __init__(self, intent_dict):
+        if intent_dict is dict:
+            self.intentDict = intent_dict
+        elif intent_dict is str:
+            self.intentDict = parse_ini_file(intent_dict)
+        else:
+            raise ValueError("intent_dict must be either a dictionary or a string")
 
 
     def comparePolicyWithProfile(self, profile:Profile, intent:str) -> tuple[bool, Entity]:
