@@ -1,6 +1,6 @@
 from copy import deepcopy
 import datetime
-from model.Entity import Entity
+from model.enumerations.Entity import Entity
 from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
 from model.Profile import Profile,PrivacyPolicy
 from model.enumerations.Purpose import Purpose
