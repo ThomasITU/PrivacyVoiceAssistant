@@ -1,4 +1,3 @@
-import logging
 import os
 import sys
 sys.path.append("/privacyVoiceAssistant/src")
@@ -11,7 +10,6 @@ from tempfile import mkdtemp
 
 from model.Profile import Profile
 from util.SaveAndLoad import SaveAndLoad   
-from util.Generate import Generate
 
 
 class VoiceAuthentication:

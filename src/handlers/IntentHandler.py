@@ -1,7 +1,8 @@
 import sys
 import datetime
 import random
-    
+sys.path.append("/privacyVoiceAssistant/src")
+sys.path.append("../src/")
 
 class IntentHandler:
 
