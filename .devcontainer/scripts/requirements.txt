@@ -20,7 +20,6 @@ numpy==1.24.2
 packaging==23.0
 pandas==1.5.3
 pesq==0.0.4
-PyBluez==0.30
 pyloudnorm==0.1.1
 pyroomacoustics==0.7.3
 pysndfx==0.3.6
