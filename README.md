@@ -1,13 +1,13 @@
-# PrivacyVoiceAssistant
+# Privacy Voice Assistant
 
-## pre-requesites
+## Pre-requesites
 
-- Linux machine
-- Docker engine installed
+- Linux operative system
+- Docker engine
 - Microphone, Speaker and Bluetooth device
 - Python 3.10 
 
-## How to run on linux
+## How to run on a Linux system
 
 Ensure docker compose is installed
 
@@ -20,7 +20,7 @@ cd .devcontainer
 docker compose up 
 ```
 
-Open the docker container with an interactive terminal and install dependicies using the script
+Open the docker container with an interactive terminal and install dependencies using the following script.
 
 ```sh
 docker exec -it rhasspy /bin/bash
@@ -33,7 +33,7 @@ source /privacyVoiceAssistant/scripts/SetupDependencies.sh
 docker compose start
 ```
 
-Check the localhost [settings](http://localhost:12101/settings#microphone)
+Access the [web interface](http://localhost:12101/settings#microphone) 
 - Microphone is picked up 
     - ![pyaudio](/notes/images/Pyaudio_Microphone.png)
 
@@ -119,8 +119,9 @@ python3.10 BluethoothClient.py
 
 Respond to the prompts and provide the MAC address of the Bluetooth Server for biggest chance of success.
 
-The profile send is a dummy profile, to change the profile being sent, look at the BluetoothClient code line 47.
+The profile send is a dummy profile, to change the profile being sent, look at BluetoothClient.py line 47.
 
+### Also be aware the BluetoothClient doesn't send voice files 
 
 ## How to run test 
 
@@ -134,4 +135,4 @@ cd test
 pytest <test_file.py>
 ```
 
-Be aware some of the Voice assistant test will fail as the paths for profiles voice samples paths are based on the system created at.   
+Be aware some of the Voice assistant test will fail as the paths for profiles voice samples paths are based on the system created at.  
