@@ -36,7 +36,7 @@ Check the localhost [settings](http://localhost:12101/settings#microphone)
 - Microphone is picked up 
     - ![pyaudio](/notes/images/Pyaudio_Microphone.png)
 
-- Speaker is  
+- Speaker can output sound using the speech-to-text  
     - ![speaker](/notes/images/speaker_audio.png)
 
 ### test speaker config
@@ -71,3 +71,5 @@ pytest
 cd test
 pytest <test_file.py>
 ```
+
+Be aware some of the Voice assistant test will fail as the paths for profiles voice samples paths are based on the system created at.   
