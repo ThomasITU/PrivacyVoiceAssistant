@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.10
 
 from asyncio import log
 import subprocess
@@ -6,15 +6,29 @@ import sys
 import json
 import uuid
 from os import getcwd
+import logging
+import sys
 
-
+sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append(getcwd() + "/../")
-from handlers.IntentHandler import IntentHandler
-from handlers.PolicyHandler import PolicyHandler
-from services.VoiceAuthentication import VoiceAuthentication
-from model.Constant import Constant
-from util.SaveAndLoad import SaveAndLoad
-from util.SentencesParser import parse_ini_file
+
+try:
+    from util.Generate import Generate
+    Generate.logingConfig(logging)
+    from handlers.IntentHandler import IntentHandler
+    from handlers.PolicyHandler import PolicyHandler
+    from services.VoiceAuthentication import VoiceAuthentication
+    from model.Constant import Constant
+    from util.SaveAndLoad import SaveAndLoad
+    from util.SentencesParser import parse_ini_file
+except Exception as e:
+    process = subprocess.Popen(['python', '-V'],
+                            stdout=subprocess.PIPE,
+                            universal_newlines=True)
+    logging.info(process.stdout.read())
+    logging.info(e)
+
+
 
 
 
