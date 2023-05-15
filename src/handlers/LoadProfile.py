@@ -41,9 +41,9 @@ profile:Profile = SaveAndLoad.load_from_json(path)
 logging.info(profile)
 print(profile.policy)
 
-dataUsageRules = DUR(purposes={Purpose.WEATHER,Purpose.CALENDER,Purpose.SEARCH,Purpose.NAVIGATION},timestamp = datetime.datetime(1972, 1, 1))
-dataCommunicationRule = DCR(set(),Entity.GOOGLE, dataUsageRules)
-pilot = [PrivacyPolicy("Audio",dataCommunicationRule,set())]
+data_usage_rules = DUR(purposes={Purpose.WEATHER,Purpose.CALENDER,Purpose.SEARCH,Purpose.NAVIGATION},timestamp = datetime.datetime(1972, 1, 1))
+data_communication_rule = DCR(set(),Entity.GOOGLE, data_usage_rules)
+pilot = [PrivacyPolicy("Audio",data_communication_rule,set())]
 profile.policy = pilot
 print(profile.policy)
 SaveAndLoad.save_as_json(path,profile)
