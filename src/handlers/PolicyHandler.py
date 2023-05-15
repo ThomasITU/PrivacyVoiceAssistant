@@ -5,17 +5,14 @@ import sys
 sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append("../src/")
 
-try:
-    from util.Generate import Generate
-    Generate.logingConfig(logging)
-    from util.SentencesParser import parse_ini_file
-    from model.Profile import Profile
-    from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
-    from model.enumerations.Entity import Entity
-    from model.enumerations.Purpose import Purpose
-    from model.Constant import Constant
-except Exception as e:
-    logging.info(e)
+from util.Generate import Generate
+Generate.logingConfig(logging)
+from util.SentencesParser import parse_ini_file
+from model.Profile import Profile
+from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
+from model.enumerations.Entity import Entity
+from model.enumerations.Purpose import Purpose
+from model.Constant import Constant
 
 
 class PolicyHandler:

@@ -78,4 +78,6 @@ def main():
     except OSError as e:
         logging.error(e)
         voice_assistant_speech(e)
-main()
+
+if __name__ == '__main__':
+    main()
