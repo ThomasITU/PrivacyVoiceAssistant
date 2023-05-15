@@ -51,7 +51,22 @@ speaker-test
 ```sh 
 aplay -l
 ```
+
 find the sound card device file <expand later>
+
+### If Playback open error: -16,Device or resource busy
+
+```sh
+lsof | grep snd
+```
+
+Look for pulseaudi process id's
+
+```sh
+kill <PID>
+```
+
+
 
 ### In case of microphone not being picked up 
 
