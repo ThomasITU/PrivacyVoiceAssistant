@@ -3,6 +3,7 @@
 import subprocess
 import json
 import uuid
+import os
 
 import logging
 import sys
@@ -28,6 +29,7 @@ def save_intent_to_file(intent:str, file_name:str):
     file_name = f"{file_name.removesuffix('.wav')}.json"
     file_name = file_name.removeprefix(Constant.VOICE_PATH)
     SaveAndLoad.save_as_json(Constant.INTENT_PATH+file_name, intent)
+    return file_name
 
 def save_voice_file(path = Constant.VOICE_PATH) -> str:
     file_name = str(uuid.uuid4())+".wav"
@@ -56,11 +58,11 @@ def main():
     try:
         logging.info("Start handling intent")
         intent:str = get_intent()
-        file_name:str = save_voice_file()
-        save_intent_to_file(intent, file_name)
+        voice_file_name:str = save_voice_file()
+        intent_file_name:str =save_intent_to_file(intent, voice_file_name)
         logging.info("Start voice authentication")
         voiceHandler = VoiceAuthentication()
-        profile = voiceHandler.find_best_match_above_threshold(voiceSample=Constant.VOICE_PATH+file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
+        profile = voiceHandler.find_best_match_above_threshold(voiceSample=Constant.VOICE_PATH+voice_file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
         logging.info(profile)
         logging.info("Start policy comparison")
         intent_dict = parse_ini_file(Constant.INI_FILE_PATH)
@@ -75,7 +77,13 @@ def main():
             logging.info("Intent handled")
         else:
             logging.info("Intent is not allowed")
-            voice_assistant_speech(is_allowed[1])
+            voice_assistant_speech("We could not find a match or you have not allowed to use this service")
+            voice_path =f"{Constant.VOICE_PATH+voice_file_name}"
+            intent_path = f"{Constant.INTENT_PATH+intent_file_name}"
+            if os.path.exists(voice_path):
+                os.remove(voice_path)
+            if os.path.exists(intent_path):
+                os.remove(intent_path)
     except OSError as e:
         logging.error(e)
         voice_assistant_speech(e)

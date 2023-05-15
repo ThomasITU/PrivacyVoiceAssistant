@@ -13,16 +13,11 @@ Ensure docker compose is installed
 
 ### Only intial setup (Reinstall scripts)  
 
-From root
+From repository root
 
 ```sh
 cd .devcontainer
 docker compose up 
-```
-
-### After initial setup
-```sh
-docker compose start
 ```
 
 Open the docker container with an interactive terminal and install dependicies using the script
@@ -32,6 +27,12 @@ docker exec -it rhasspy /bin/bash
 source /privacyVoiceAssistant/scripts/SetupDependencies.sh
 ```
 
+### After initial setup
+
+```sh
+docker compose start
+```
+
 Check the localhost [settings](http://localhost:12101/settings#microphone)
 - Microphone is picked up 
     - ![pyaudio](/notes/images/Pyaudio_Microphone.png)
@@ -39,7 +40,7 @@ Check the localhost [settings](http://localhost:12101/settings#microphone)
 - Speaker can output sound using the speech-to-text  
     - ![speaker](/notes/images/speaker_audio.png)
 
-### test speaker config
+### Test speaker config
 
 ```sh
 docker exec -it rhasspy /bin/bash
@@ -52,7 +53,7 @@ speaker-test
 aplay -l
 ```
 
-find the sound card device file <expand later>
+Find your sound card device and adjust the etc/asound.conf file 
 
 ### If Playback open error: -16,Device or resource busy
 
@@ -67,15 +68,61 @@ kill <PID>
 ```
 
 
-
 ### In case of microphone not being picked up 
 
+Use the Rhasspy's [webinterface](http://localhost:12101/settings#microphone) and use the test feature, look for working mic or the (*) next to the devices 
+
+If this doesn't work look for potential PID's and apply the kill  
+
 ```sh
+fuser -v /dev/snd/*
+```
+
+### When the voice assistant is running 
+
+Try to activate the voice assistant with the hotword "Blueberry" followed by "What's the time" look into ***.config/profiles/sentences.ini*** for other sentences.
+
+Use the ***/src/handlers/LoadProfile.py*** class to adjust PrivacyPolicies for the files located in ***/resources/profiles*** also adjust the voice files.   
+
+
+
+### To stop the container
+
+```sh
+docker compose stop
 ```
 
 
+## Bluetooth communication
 
-## how to run test 
+Firstly ensure the bluetooth device is setup look at the [notes](/notes/Bluetooth.md) or execute this script. 
+
+```sh
+source .devcontainer/scripts/SetupBluetooth.sh
+```
+
+### To run the Bluetooth server
+
+```sh
+cd /src/services
+python3.10 BluethoothServer.py   
+```
+
+If this fails try look revisit the [notes](/notes/Bluetooth.md) or google.
+
+### To run the Bluetooth Client
+
+```sh
+cd /src/services
+python3.10 BluethoothClient.py  
+```
+
+Respond to the prompts and provide the MAC address of the Bluetooth Server for biggest chance of success.
+
+The profile send is a dummy profile, to change the profile being sent, look at the BluetoothClient code line 47.
+
+
+## How to run test 
 
 ```sh
 cd test
