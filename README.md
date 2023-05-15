@@ -35,10 +35,10 @@ docker compose start
 
 Access the [web interface](http://localhost:12101/settings#microphone) 
 - Microphone is picked up 
-    - ![pyaudio](/notes/images/Pyaudio_Microphone.png)
+    ![pyaudio](/notes/images/Pyaudio_Microphone.png)
 
 - Speaker can output sound using the speech-to-text  
-    - ![speaker](/notes/images/speaker_audio.png)
+    ![speaker](/notes/images/speaker_audio.png)
 
 ### Test speaker config
 
@@ -118,6 +118,7 @@ python3.10 BluethoothClient.py
 ```
 
 Respond to the prompts and provide the MAC address of the Bluetooth Server for biggest chance of success.
+![Bluetoothclient](/notes/images/BluetoothClient.png)
 
 The profile send is a dummy profile, to change the profile being sent, look at BluetoothClient.py line 47.
 
