@@ -1,18 +1,8 @@
 import sys
 import datetime
 import random
-import logging
-import sys
 sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append("../src/")
-
-try:
-    from util.Generate import Generate
-    Generate.logingConfig(logging)
-    from model.Intent import Intent
-except Exception as e:
-    logging.info(e)
-    
 
 class IntentHandler:
 
@@ -29,8 +19,7 @@ class IntentHandler:
                     return _get_temperature()
                 case _:
                     return f"Currently we cannot provide {intent} as it is not implemented yet"
-        except Exception as e:
-            logging.info(e)
+        except Exception as _:
             return "Sorry, something went wrong"
 
 def _get_time() -> str:

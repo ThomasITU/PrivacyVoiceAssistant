@@ -21,6 +21,10 @@ class Profile:
     def __hash__(self) -> int:
         return super(Profile, self).__hash__()
     
+    def __lt__(self, other):
+        if isinstance(other, Profile):
+            return self.voiceSamples < other.voiceSamples
+    
     def __str__(self) -> str:
         policies = ""
         for policy in self.policy:

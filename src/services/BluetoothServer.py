@@ -2,14 +2,13 @@
 import sys
 from os import getcwd
 import copy as _
-from uuid import uuid4
 import bluetooth
 from bluetooth import *
-from model.Constant import Constant
+
 
 sys.path.append(getcwd() + "/../")
 print(sys.path)
-
+from model.Constant import Constant
 from model.Profile import Profile
 from util.SaveAndLoad import SaveAndLoad
 

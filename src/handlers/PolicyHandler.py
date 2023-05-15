@@ -1,49 +1,43 @@
 import sys
-
-import logging
-import sys
 sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append("../src/")
 
-try:
-    from util.Generate import Generate
-    Generate.logingConfig(logging)
-    from util.SentencesParser import parse_ini_file
-    from model.Profile import Profile
-    from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
-    from model.enumerations.Entity import Entity
-    from model.enumerations.Purpose import Purpose
-    from model.Constant import Constant
-except Exception as e:
-    logging.info(e)
+from util.SentencesParser import parse_ini_file
+from model.Profile import Profile
+from model.enumerations.Entity import Entity
+from model.enumerations.Purpose import Purpose
+
 
 
 class PolicyHandler:
-    def __init__(self, intent_dict:dict[str, dict[Entity, list[Purpose]]]):
-        self.intentDict = intent_dict
+
+    def __init__(self, intent_dict):
+        if isinstance(intent_dict, dict):
+            self.intentDict = intent_dict
+        elif isinstance(intent_dict,str):
+            self.intentDict = parse_ini_file(intent_dict)
+        else:
+            raise ValueError("intent_dict must be either a dictionary or a string")
 
 
     def comparePolicyWithProfile(self, profile:Profile, intent:str) -> tuple[bool, Entity]:
-        try:
-            entities:dict = self.intentDict[intent]
-            policies:list = profile.get_policy()
-            isSuccessfulEntity = (False, None) 
+        entities:dict = self.intentDict[intent]
+        policies:list = profile.get_policy()
+        is_successful_entity = (False, None) 
 
-            for p in policies:
-                logging.info(p)
-                entity = p.dataCommunicationRules.get_entity()
-                logging.info(entity)
-                if entity not in entities:
-                    break
-                for purposes in p.dataCommunicationRules.dataUsageRules.get_purposes():
-                    logging.info(purposes)
-                    if purposes not in entities[entity]:
-                        break
-                tmp = (True, entity)
-                isSuccessfulEntity = tmp
-            logging.info(isSuccessfulEntity[0])
-            logging.info("Entity: " + isSuccessfulEntity[1].name)
-            return isSuccessfulEntity
-        except Exception as e:
-            logging.info(e)
-            return (False, None)
+        for policy in policies:
+            entity = policy.dataCommunicationRules.get_entity()
+            if entity not in entities:
+                continue
+
+            purposes = policy.dataCommunicationRules.dataUsageRules.get_purposes()
+            if not purposes:  
+                continue
+            
+            entity_purposes:set[Purpose] = set(entities[entity])
+            is_strict_superset = entity_purposes.issuperset(purposes) and entity_purposes != purposes
+            if is_strict_superset:
+                continue
+            tmp = (True, entity)
+            is_successful_entity = tmp
+        return is_successful_entity

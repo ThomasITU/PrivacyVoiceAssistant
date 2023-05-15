@@ -1,12 +1,7 @@
-from os import getcwd
-import os
 import pickle
 import sys
 
 sys.path.append("../src/")
-
-import json
-import jsonpickle
 from util.Generate import Generate as _
 from util.SaveAndLoad import SaveAndLoad
 from model.Profile import Profile

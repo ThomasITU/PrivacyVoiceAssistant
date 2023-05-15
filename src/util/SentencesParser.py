@@ -1,8 +1,11 @@
 import sys
 from os import getcwd
 import copy as _
-
+import sys
+sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append(getcwd() + "/../")
+
+
 from util.SaveAndLoad import SaveAndLoad as util
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose

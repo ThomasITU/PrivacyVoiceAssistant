@@ -91,7 +91,7 @@ ensure <program> is executable, chmod +x <program>
   }
 }
 
-### Overvej at bruge [remote http hermes](https://github.com/rhasspy/rhasspy-remote-http-hermes) MQTT system
+### Consider [remote http hermes](https://github.com/rhasspy/rhasspy-remote-http-hermes) MQTT system
 
 git clone https://github.com/rhasspy/rhasspy-remote-http-hermes
 cd rhasspy-remote-http-hermes
