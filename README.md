@@ -1,6 +1,6 @@
 # Privacy Voice Assistant
 
-## Pre-requesites
+## Prerequesites
 
 - Linux operative system
 - Docker engine
@@ -11,7 +11,7 @@
 
 Ensure docker compose is installed
 
-### Only intial setup (Reinstall scripts)  
+### Only intial setup  
 
 From repository root
 
@@ -34,10 +34,10 @@ docker compose start
 ```
 
 Access the [web interface](http://localhost:12101/settings#microphone) 
-- Microphone is picked up 
+- Ensure the microphone is picked up 
     ![pyaudio](/notes/images/Pyaudio_Microphone.png)
 
-- Speaker can output sound using the speech-to-text  
+- Ensure speaker can output sound using the speech-to-text  
     ![speaker](/notes/images/speaker_audio.png)
 
 ### Test speaker config
