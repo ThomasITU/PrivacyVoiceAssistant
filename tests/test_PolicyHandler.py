@@ -21,7 +21,7 @@ def test_comparePolicyWithProfile_returns_proper_tuple():
     expectedFalse = (False, None)
     
     #Arrange IntentDicts
-    dictPurposes = {Purpose.WEATHER, Purpose.CALENDER, Purpose.SEARCH}
+    dictPurposes = {Purpose.WEATHER, Purpose.SEARCH}
     dictEntities = {Entity.GOOGLE: dictPurposes,Entity.ALEXA: dictPurposes}
     dictIntent = {"DummyIntent": dictEntities}
 
@@ -53,7 +53,7 @@ def test_comparePolicyWithProfile_given_profile_with_no_purposes_returns_false()
     expected = (False, None)
     
     #Arrange IntentDicts
-    dictPurposes = {Purpose.WEATHER, Purpose.CALENDER, Purpose.SEARCH}
+    dictPurposes = {Purpose.WEATHER, Purpose.SEARCH}
     dictEntities = {Entity.GOOGLE: dictPurposes,Entity.ALEXA: dictPurposes}
     dictIntent = {"DummyIntent": dictEntities}
 
@@ -66,4 +66,3 @@ def test_comparePolicyWithProfile_given_profile_with_no_purposes_returns_false()
     #Assert
     assert expected[0] == actual[0]
     assert expected[1] == actual[1]
-

@@ -18,6 +18,7 @@ from model.Constant import Constant
 class PolicyHandler:
 
     def __init__(self, intent_dict):
+        logging.info(len(intent_dict))
         if isinstance(intent_dict, dict):
             self.intentDict = intent_dict
         elif isinstance(intent_dict,str):
@@ -42,9 +43,13 @@ class PolicyHandler:
             if not purposes:  
                 continue
             
-            for purpose in purposes:
-                if purpose not in entities[entity]:
-                    continue
+            entityPurposes:set[Purpose] = set(entities[entity])
+            logging.info(f"entityPurposes: {len(entityPurposes)}")
+            logging.info(f"purposes: {len(purposes)}")
+            isStrictSuperset = entityPurposes.issuperset(purposes) and entityPurposes != purposes
+            logging.info(f"isSuperset: {isStrictSuperset}")
+            if isStrictSuperset:
+                continue
             tmp = (True, entity)
             isSuccessfulEntity = tmp
         return isSuccessfulEntity
