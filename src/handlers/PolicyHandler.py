@@ -1,21 +1,25 @@
-
-from datetime import datetime
-from os import getcwd
 import sys
 
-
-
+import logging
+import sys
+sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append("../src/")
-from util.SentencesParser import parse_ini_file
-from model.Profile import Profile
-from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
-from model.enumerations.Entity import Entity
-from model.enumerations.Purpose import Purpose
-from model.Constant import Constant
+
+try:
+    from util.Generate import Generate
+    Generate.logingConfig(logging)
+    from util.SentencesParser import parse_ini_file
+    from model.Profile import Profile
+    from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
+    from model.enumerations.Entity import Entity
+    from model.enumerations.Purpose import Purpose
+    from model.Constant import Constant
+except Exception as e:
+    logging.info(e)
 
 
 class PolicyHandler:
-    
+
     def __init__(self, intent_dict):
         if isinstance(intent_dict, dict):
             self.intentDict = intent_dict
@@ -44,5 +48,6 @@ class PolicyHandler:
             for purpose in purposes:
                 if purpose not in entities[entity]:
                     continue
-            isSuccessfulEntity = (True, entity)
+            tmp = (True, entity)
+            isSuccessfulEntity = tmp
         return isSuccessfulEntity

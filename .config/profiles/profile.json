@@ -14,7 +14,7 @@
     },
     "microphone": {
         "pyaudio": {
-            "device": "1"
+            "device": "11"
         },
         "system": "pyaudio"
     },
