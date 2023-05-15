@@ -1,4 +1,5 @@
 from copy import deepcopy
+from pathlib import Path
 import datetime
 import logging
 from model.enumerations.Entity import Entity
@@ -10,9 +11,11 @@ from model.enumerations.Purpose import Purpose
 class Generate():
         
     def logingConfig(logger:logging):
+
+        absolute_path = Path("/tmp/debug.log").resolve() 
         logger.basicConfig(format='%(asctime)s - %(message)s', 
                     level=logging.INFO,
-                    handlers=[logging.FileHandler("tmp/debug.log"),logging.StreamHandler()])
+                    handlers=[logging.FileHandler(absolute_path),logging.StreamHandler()])
 
     def dummyProfile() -> Profile: 
         dataUsageRules = DUR(purposes = {Purpose.WEATHER, Purpose.SEARCH},timestamp = datetime.datetime(1972, 1, 1))

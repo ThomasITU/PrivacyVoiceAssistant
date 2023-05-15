@@ -9,13 +9,15 @@ import subprocess
 import sys
 import json
 import uuid
+import os
 from os import getcwd
+from pathlib import Path
 
 
-
+absolute_path = Path("debug.log").resolve()
 logging.basicConfig(format='%(asctime)s - %(message)s', 
                         level=logging.INFO,
-                        handlers=[logging.FileHandler("tmp/debug.log"),logging.StreamHandler()])
+                        handlers=[logging.FileHandler(absolute_path),logging.StreamHandler()])
 logging.info("importing modules")
 
 sys.path.append("/privacyVoiceAssistant/src")
@@ -34,13 +36,13 @@ except Exception as e:
     logging.info(getcwd())
     logging.info(e)
 
-path = "/privacyVoiceAssistant/resources/profiles/test2.json"
+path = "/privacyVoiceAssistant/resources/profiles/test1.json"
 profile:Profile = SaveAndLoad.load_from_json(path)
 logging.info(profile)
 print(profile.policy)
 
-dataUsageRules = DUR(purposes = {Purpose.NAVIGATION},timestamp = datetime.datetime(1972, 1, 1))
-dataCommunicationRule = DCR(set(),Entity.GOOGLE,dataUsageRules)
+dataUsageRules = DUR(purposes={Purpose.WEATHER,Purpose.CALENDER,Purpose.SEARCH,Purpose.NAVIGATION},timestamp = datetime.datetime(1972, 1, 1))
+dataCommunicationRule = DCR(set(),Entity.GOOGLE, dataUsageRules)
 pilot = [PrivacyPolicy("Audio",dataCommunicationRule,set())]
 profile.policy = pilot
 print(profile.policy)
