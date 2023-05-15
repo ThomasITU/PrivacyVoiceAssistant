@@ -1,19 +1,15 @@
 import sys
 from os import getcwd
 import copy as _
-import logging
 import sys
 sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append(getcwd() + "/../")
 
-try:
-    from util.Generate import Generate
-    Generate.logingConfig(logging)
-    from util.SaveAndLoad import SaveAndLoad as util
-    from model.enumerations.Entity import Entity
-    from model.enumerations.Purpose import Purpose
-except Exception as e:
-    logging.info(e)
+
+from util.SaveAndLoad import SaveAndLoad as util
+from model.enumerations.Entity import Entity
+from model.enumerations.Purpose import Purpose
+
 
 def parse_ini_file(filename):
     purpose = {}

@@ -4,7 +4,7 @@ import sys
 sys.path.append("../src/")
 
 from model.enumerations.Entity import Entity
-from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy, Purpose
+from model.PrivacyPolicy import DCR, DUR, Purpose
 from util.Generate import Generate as _
 
 def test_get_dcr_returns_dataCommunicationRules():

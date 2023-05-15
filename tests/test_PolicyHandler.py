@@ -5,11 +5,9 @@ sys.path.append("../src/")
 from util.Generate import Generate as _
 
 from handlers.PolicyHandler import PolicyHandler
-from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
-from model.Profile import Profile
+from model.PrivacyPolicy import DCR, DUR
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
-from model.Constant import Constant
 
 
 path = getcwd() +  "/resources/"

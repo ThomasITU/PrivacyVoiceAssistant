@@ -1,15 +1,9 @@
 #!/usr/bin/env python3.10
 
 import sys
-import json
-import random
 import datetime
 import logging
-import subprocess
 import sys
-import json
-import uuid
-import os
 from os import getcwd
 from pathlib import Path
 
@@ -22,12 +16,7 @@ logging.info("importing modules")
 
 sys.path.append("/privacyVoiceAssistant/src")
 try:
-    from handlers.IntentHandler import IntentHandler
-    from handlers.PolicyHandler import PolicyHandler
-    from services.VoiceAuthentication import VoiceAuthentication
-    from model.Constant import Constant
     from util.SaveAndLoad import SaveAndLoad
-    from util.SentencesParser import parse_ini_file
     from model.Profile import Profile
     from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
     from model.enumerations.Entity import Entity

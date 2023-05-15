@@ -4,14 +4,12 @@ from os import getcwd
 import copy as _
 import bluetooth
 from bluetooth import *
-sys.path.append(getcwd() + "/../")
 
+sys.path.append(getcwd() + "/../")
 from util.Generate import Generate as _
 from util.SaveAndLoad import SaveAndLoad
 from model.Profile import Profile
 
-# Server mac address: 
-# 00:C2:C7:74:FF:85
 
 def printNearbyDevices():
     devices = discover_devices(duration=15)

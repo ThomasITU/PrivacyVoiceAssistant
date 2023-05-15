@@ -46,13 +46,10 @@ def get_intent() -> str:
     return intent
 
 def voice_assistant_speech(text:str):
-    logging.info("Start voice assistant speech")
     speech = dict()
     speech["speech"] = {"text": text}
     print(json.dumps(speech))
-    logging.info("End voice assistant speech")
 
-logging.info("before main")
 def main():
     
     try:
@@ -63,7 +60,11 @@ def main():
         logging.info("Start voice authentication")
         voiceHandler = VoiceAuthentication()
         profile = voiceHandler.find_best_match_above_threshold(voiceSample=Constant.VOICE_PATH+voice_file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
-        logging.info(profile)
+        if profile == None:
+            logging.info("No profile found")
+            voice_assistant_speech("No profile found")
+            return
+        logging.info(profile[0].name)
         logging.info("Start policy comparison")
         intent_dict = parse_ini_file(Constant.INI_FILE_PATH)
         policy_handler = PolicyHandler(intent_dict)
@@ -74,7 +75,6 @@ def main():
             response = intentHandler.handle_intent(intent)
             logging.info(response)
             voice_assistant_speech(response)
-            logging.info("Intent handled")
         else:
             logging.info("Intent is not allowed")
             voice_assistant_speech("We could not find a match or you have not allowed to use this service")

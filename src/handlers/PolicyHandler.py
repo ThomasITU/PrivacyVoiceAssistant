@@ -1,24 +1,17 @@
 import sys
-
-import logging
-import sys
 sys.path.append("/privacyVoiceAssistant/src")
 sys.path.append("../src/")
 
-from util.Generate import Generate
-Generate.logingConfig(logging)
 from util.SentencesParser import parse_ini_file
 from model.Profile import Profile
-from model.PrivacyPolicy import DCR, DUR, PrivacyPolicy
 from model.enumerations.Entity import Entity
 from model.enumerations.Purpose import Purpose
-from model.Constant import Constant
+
 
 
 class PolicyHandler:
 
     def __init__(self, intent_dict):
-        logging.info(len(intent_dict))
         if isinstance(intent_dict, dict):
             self.intentDict = intent_dict
         elif isinstance(intent_dict,str):
@@ -30,9 +23,7 @@ class PolicyHandler:
     def comparePolicyWithProfile(self, profile:Profile, intent:str) -> tuple[bool, Entity]:
         entities:dict = self.intentDict[intent]
         policies:list = profile.get_policy()
-
-        logging.info(len(policies))
-        isSuccessfulEntity = (False, None) 
+        is_successful_entity = (False, None) 
 
         for policy in policies:
             entity = policy.dataCommunicationRules.get_entity()
@@ -43,13 +34,10 @@ class PolicyHandler:
             if not purposes:  
                 continue
             
-            entityPurposes:set[Purpose] = set(entities[entity])
-            logging.info(f"entityPurposes: {len(entityPurposes)}")
-            logging.info(f"purposes: {len(purposes)}")
-            isStrictSuperset = entityPurposes.issuperset(purposes) and entityPurposes != purposes
-            logging.info(f"isSuperset: {isStrictSuperset}")
-            if isStrictSuperset:
+            entity_purposes:set[Purpose] = set(entities[entity])
+            is_strict_superset = entity_purposes.issuperset(purposes) and entity_purposes != purposes
+            if is_strict_superset:
                 continue
             tmp = (True, entity)
-            isSuccessfulEntity = tmp
-        return isSuccessfulEntity
+            is_successful_entity = tmp
+        return is_successful_entity
