@@ -21,9 +21,9 @@ class VoiceAuthentication:
             savedir=self.tmp_dir,
         )
         
-    def find_best_match_above_threshold(self, voiceSample:str, threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD):
+    def find_best_match_above_threshold(self, voice_sample:str, threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD):
         profiles = self.get_all_profiles()
-        best_match = self._find_best_match(voiceSample, profiles)
+        best_match = self._find_best_match(voice_sample, profiles)
         if (best_match[1] >= threshold):
             return best_match
         return None
