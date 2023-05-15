@@ -63,7 +63,8 @@ def main():
         profile = voiceHandler.find_best_match_above_threshold(voiceSample=Constant.VOICE_PATH+file_name,threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD)
         logging.info(profile)
         logging.info("Start policy comparison")
-        policy_handler = PolicyHandler(intent_dict=parse_ini_file(Constant.INI_FILE_PATH))
+        intent_dict = parse_ini_file(Constant.INI_FILE_PATH)
+        policy_handler = PolicyHandler(intent_dict)
         is_allowed = policy_handler.comparePolicyWithProfile(profile[0], intent)
         if (is_allowed[0]):
             logging.info("Intent is allowed")

@@ -30,7 +30,7 @@ class PolicyHandler:
         entities:dict = self.intentDict[intent]
         policies:list = profile.get_policy()
 
-        print(policies)
+        logging.info(len(policies))
         isSuccessfulEntity = (False, None) 
 
         for policy in policies:

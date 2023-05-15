@@ -26,7 +26,7 @@ class VoiceAuthentication:
         
     def find_best_match_above_threshold(self, voiceSample:str, threshold=Constant.PROFILE_AUTHENTICATION_THRESHOLD):
         profiles = self.get_all_profiles()
-        logging.info(f"found profiles: {profiles.count}")
+        logging.info(f"found profiles: {len(profiles)}")
         best_match = self._find_best_match(voiceSample, profiles)
         if (best_match[1] >= threshold):
             return best_match
